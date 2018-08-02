@@ -1,7 +1,3 @@
-[submodule "ext/jose"]
-	path = ext/jose
-	url = ../../../../mirror/security/jose
-
 [submodule "deps/jose"]
 	path = deps/jose
 	url = ../../../../mirror/security/jose
