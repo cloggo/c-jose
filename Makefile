@@ -4,13 +4,14 @@ IMAGE := $(DOCKER_REGISTRY)/$(IMAGE_PATH)
 
 DOCKER_RUN := docker run --user root -it \
   -e "NODE_ENV=test" \
-	-v "$(CURDIR)/node_modules:/deploy/node_modules" \
 	-v "$(CURDIR)/src:/deploy/src" \
+	-v "$(CURDIR)/deps:/deploy/deps" \
 	-v "$(CURDIR)/test:/deploy/test" \
 	$(IMAGE)
 
 MOCHA_BIN := node_modules/.bin/mocha
 NODEMON_BIN := node_modules/.bin/nodemon
+NODEGYP_BIN := node_modules/.bin/node-gyp
 
 WATCH_EXTS := js,json
 
@@ -18,6 +19,9 @@ WATCH_EXTS := js,json
 
 pull:
 	docker pull $(IMAGE)
+
+build: pull
+	$(DOCKER_RUN) $(NODEGYP_BIN) configure
 
 watch: pull
 	$(DOCKER_RUN) $(NODEMON_BIN) -e $(WATCH_EXTS) --watch app --watch test \

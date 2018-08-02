@@ -1,16 +1,33 @@
 {
-  "name": "c-jose",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@gitlab.delite.ca:docker/lib/node/c-jose.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+    "name": "c-jose",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha -R spec",
+        "install": "node-pre-gyp install --fallback-to-build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@gitlab.delite.ca:docker/lib/node/c-jose.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "node-pre-gyp": "^0.10.2"
+        "node-gyp": "^3.7.0"
+    },
+    "devDependencies": {
+        "chai": "^4.1.2",
+        "mocha": "^5.2.0",
+        "supertest": "^3.1.0"
+    },
+      "binary": {
+    "module_name": "jose",
+    "module_path": "./lib/binding/{node_abi}-{platform}-{arch}",
+    "host": "https://mapbox-node-binary.s3.amazonaws.com",
+    "remote_path": "./{name}/v{version}/{toolset}/",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz"
+  }
 }
