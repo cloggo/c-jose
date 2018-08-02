@@ -11,7 +11,7 @@
       ],
       "sources": [ "./src/module.c" ],
       'dependencies': [
-        'deps/jose/jose.gyp',
+        'deps/jose/jose.gyp:jose',
       ],
     }
   ]
