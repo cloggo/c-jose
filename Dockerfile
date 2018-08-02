@@ -23,6 +23,8 @@ RUN DEV_PACKAGES="make gcc g++ python git" \
 
 ADD ./docker-entrypoint.sh /docker-entrypoint.sh
 ADD ./src $DEPLOY_PATH/$APP_DIR
+ADD ./deps $DEPLOY_PATH/$APP_DIR
+ADD ./binding.gyp $DEPLOY_PATH/binding.gyp
 
 RUN chmod +x /docker-entrypoint.sh \
   && chown -R $USER $DEPLOY_PATH

@@ -8,7 +8,10 @@
       'defines': [
         'MODULE_NAME=<(module_name)'
       ],
-      "sources": [ "./src/module.c" ]
+      "sources": [ "./src/module.c" ],
+      'dependencies': [
+        'deps/jose/jose.gyp',
+      ],
     }
   ]
 }
