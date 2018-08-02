@@ -16,6 +16,7 @@
     "license": "ISC",
     "dependencies": {
         "nan": "~2.10.0",
+        "node-gyp": "^3.7.0",
         "node-pre-gyp": "^0.10.2"
     },
     "devDependencies": {
