@@ -14,7 +14,7 @@ WORKDIR $DEPLOY_PATH
 ADD ./package.json $DEPLOY_PATH/package.json
 
 RUN DEV_PACKAGES="make gcc g++ python git" \
-    APP_PACKAGES="meson jansson tini" \
+    APP_PACKAGES="meson jansson libcrypto1.0 zlib tini" \
     NODE_PACKAGES="node-gyp" \
     TEST_PACKAGES="mocha chai supertest" \
     && apk add --no-cache $APP_PACKAGES $DEV_PACKAGES \
