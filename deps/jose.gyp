@@ -14,6 +14,7 @@
         'jose',
         'jose/openssl'
       ],
+      'duplicate_basename_check': 0,
       'sources': [
         'jose/misc.c',
         'jose/cfg.c',

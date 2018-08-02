@@ -11,7 +11,8 @@ DOCKER_RUN := docker run --user root -it \
 
 MOCHA_BIN := node_modules/.bin/mocha
 NODEMON_BIN := node_modules/.bin/nodemon
-NODEGYP_BIN := node_modules/.bin/node-pre-gyp
+NODEGYP_BIN := node_modules/.bin/node-gyp
+NODE_PRE_GYP_BIN := node_modules/.bin/node-pre-gyp
 
 WATCH_EXTS := js,json
 
@@ -21,7 +22,8 @@ pull:
 	docker pull $(IMAGE)
 
 debug: pull
-	$(DOCKER_RUN) $(NODEGYP_BIN) rebuild --debug
+	$(DOCKER_RUN) $(NODEGYP_BIN) configure -- --no-duplicate-basename-check
+	$(DOCKER_RUN) $(NODE_PRE_GYP_BIN) build --debug -- --no-duplicate-basename-check
 
 watch: pull
 	$(DOCKER_RUN) $(NODEMON_BIN) -e $(WATCH_EXTS) --watch app --watch test \

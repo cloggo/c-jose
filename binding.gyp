@@ -2,12 +2,12 @@
   'includes': [ 'deps/common-libjose.gypi' ],
   "targets": [
     {
-      "target_name": "<(module_name)",
+      "target_name": "c-jose",
       "include_dirs" : [
           "<!(node -e \"require('nan')\")"
       ],
       'defines': [
-        'MODULE_NAME=<(module_name)'
+        'MODULE_NAME=c-jose'
       ],
       "sources": [ "./src/module.c" ],
       'dependencies': [
