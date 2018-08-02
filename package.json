@@ -1,0 +1,16 @@
+{
+  "name": "c-jose",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.delite.ca:docker/lib/node/c-jose.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

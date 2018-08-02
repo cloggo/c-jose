@@ -1,0 +1,3 @@
+[submodule "ext/jose"]
+	path = ext/jose
+	url = ../../../../mirror/security/jose
