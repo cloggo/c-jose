@@ -21,7 +21,7 @@ RUN DEV_PACKAGES="make gcc g++ python git" \
     && npm install --save-dev $TEST_PACKAGES
 
 ADD ./docker-entrypoint.sh /docker-entrypoint.sh
-ADD ./app $DEPLOY_PATH/$APP_DIR
+ADD ./src $DEPLOY_PATH/$APP_DIR
 
 RUN chmod +x /docker-entrypoint.sh \
   && chown -R $USER $DEPLOY_PATH
