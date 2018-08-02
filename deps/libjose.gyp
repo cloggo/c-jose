@@ -2,7 +2,7 @@
   'includes': [ 'common-libjose.gypi' ],
   'targets': [
     {
-      'target_name': 'jose',
+      'target_name': 'libjose',
       'type': 'static_library',
       'libraries': [
         '-lpthread',
@@ -14,7 +14,6 @@
         'jose',
         'jose/openssl'
       ],
-      'duplicate_basename_check': 0,
       'sources': [
         'jose/misc.c',
         'jose/cfg.c',

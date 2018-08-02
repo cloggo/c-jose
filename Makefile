@@ -7,6 +7,8 @@ DOCKER_RUN := docker run --user root -it \
 	-v "$(CURDIR)/src:/deploy/src" \
 	-v "$(CURDIR)/deps:/deploy/deps" \
 	-v "$(CURDIR)/test:/deploy/test" \
+	-v "$(CURDIR)/build.sh:/deploy/build.sh" \
+	-v "$(CURDIR)/binding.gyp:/deploy/binding.gyp" \
 	$(IMAGE)
 
 MOCHA_BIN := node_modules/.bin/mocha
@@ -22,7 +24,7 @@ pull:
 	docker pull $(IMAGE)
 
 debug: pull
-	$(DOCKER_RUN) build.sh
+	$(DOCKER_RUN) ./build.sh
 
 watch: pull
 	$(DOCKER_RUN) $(NODEMON_BIN) -e $(WATCH_EXTS) --watch app --watch test \
