@@ -1,5 +1,5 @@
 {
-  'includes': [ 'common-libjose.gypi' ],
+  'includes': [ 'deps/common-libjose.gypi' ],
   "targets": [
     {
       "target_name": "<(module_name)",

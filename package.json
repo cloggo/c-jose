@@ -1,7 +1,7 @@
 {
     "name": "c-jose",
-    "version": "1.0.0",
-    "description": "",
+    "description": "node c jose binding",
+    "version": "1.0.2",
     "main": "index.js",
     "scripts": {
         "test": "mocha -R spec",
@@ -15,7 +15,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "node-pre-gyp": "^0.10.2"
+        "node-pre-gyp": "^0.10.2",
         "node-gyp": "^3.7.0"
     },
     "devDependencies": {
@@ -23,11 +23,11 @@
         "mocha": "^5.2.0",
         "supertest": "^3.1.0"
     },
-      "binary": {
-    "module_name": "jose",
-    "module_path": "./lib/binding/{node_abi}-{platform}-{arch}",
-    "host": "https://mapbox-node-binary.s3.amazonaws.com",
-    "remote_path": "./{name}/v{version}/{toolset}/",
-    "package_name": "{node_abi}-{platform}-{arch}.tar.gz"
-  }
+    "binary": {
+        "module_name": "jose",
+        "module_path": "./lib/binding/{node_abi}-{platform}-{arch}",
+        "host": "https://mapbox-node-binary.s3.amazonaws.com",
+        "remote_path": "./{name}/v{version}/{toolset}/",
+        "package_name": "{node_abi}-{platform}-{arch}.tar.gz"
+    }
 }
