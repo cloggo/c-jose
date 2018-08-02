@@ -1,0 +1,36 @@
+image: registry.delite.ca/docker/docker:latest
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  CONTAINER_BUILD_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
+  DEPLOY_HOST: admin@tang.delite.ca
+  DEPLOY_CMD: ssh -p 2222 -o StrictHostKeyChecking=no -i /tmp/id_rsa ${DEPLOY_HOST}
+  PLAY_CMD: ansible-playbook -i ./hosts.ini
+  HOME: /root
+  
+stages:
+  - build
+  - release
+
+build:
+  stage: build
+  tags:
+    - linux
+  except:
+    - deploy
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $CONTAINER_BUILD_IMAGE .
+    - docker push $CONTAINER_BUILD_IMAGE 
+
+release:
+  stage: release
+  only:
+    - master
+  tags:
+    - linux
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker tag $CONTAINER_BUILD_IMAGE $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE
