@@ -11,7 +11,7 @@ DOCKER_RUN := docker run --user root -it \
 
 MOCHA_BIN := node_modules/.bin/mocha
 NODEMON_BIN := node_modules/.bin/nodemon
-NODEGYP_BIN := node_modules/.bin/node-gyp
+NODEGYP_BIN := node_modules/.bin/node-pre-gyp
 
 WATCH_EXTS := js,json
 
@@ -20,8 +20,8 @@ WATCH_EXTS := js,json
 pull:
 	docker pull $(IMAGE)
 
-build: pull
-	$(DOCKER_RUN) $(NODEGYP_BIN) configure
+debug: pull
+	$(DOCKER_RUN) $(NODEGYP_BIN) rebuild --debug
 
 watch: pull
 	$(DOCKER_RUN) $(NODEMON_BIN) -e $(WATCH_EXTS) --watch app --watch test \
