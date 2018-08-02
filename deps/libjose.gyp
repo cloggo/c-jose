@@ -1,51 +1,47 @@
 {
-  'includes': [ 'common-libjose.gypi' ],
-  'targets': [
-    {
-      'target_name': 'libjose',
-      'type': 'static_library',
-      'libraries': [
-        '-lpthread',
-        '-lz',
-        '-ljansson',
-        '-lcrypto',
-      ],
-      'include_dirs': [
-        'jose',
-        'jose/openssl'
-      ],
-      'sources': [
-        'jose/misc.c',
-        'jose/cfg.c',
-        'jose/io.c',
-        'jose/b64.c',
-        'jose/hsh.c',
-        'jose/hooks.c',
-        'jose/jwk.c',
-        'jose/jws.c',
-        'jose/jwe.c',
-        'jose/zlib/deflate.c',
-        'jose/openssl/aescbch.c',
-        'jose/openssl/aesgcm.c',
-        'jose/openssl/aesgcmkw.c',
-        'jose/openssl/aeskw.c',
-        'jose/openssl/compat.c',
-        'jose/openssl/dir.c',
-        'jose/openssl/ec.c',
-        'jose/openssl/ecdh.c',
-        'jose/openssl/ecdhes.c',
-        'jose/openssl/ecmr.c',
-        'jose/openssl/ecdsa.c',
-        'jose/openssl/hash.c',
-        'jose/openssl/hmac.c',
-        'jose/openssl/jwk.c',
-        'jose/openssl/lock.c',
-        'jose/openssl/misc.c',
-        'jose/openssl/oct.c',
-        'jose/openssl/pbes2.c',
-        'jose/openssl/rsa.c',
-        'jose/openssl/rsaes.c',
-      ]
-    }
-  ]
+    'includes': [ 'common-libjose.gypi' ],
+    'targets': [
+        {
+            'target_name': 'jose',
+            'type': 'static_library',
+            'product_prefix': 'lib',
+            'include_dirs': [
+                'jose',
+                'jose/lib',
+                'jose/lib/openssl'
+            ],
+            'sources': [
+                'jose/lib/misc.c',
+                'jose/lib/cfg.c',
+                'jose/lib/io.c',
+                'jose/lib/b64.c',
+                'jose/lib/hsh.c',
+                'jose/lib/hooks.c',
+                'jose/lib/jwk.c',
+                'jose/lib/jws.c',
+                'jose/lib/jwe.c',
+                'jose/lib/zlib/deflate.c',
+                'jose/lib/openssl/aescbch.c',
+                'jose/lib/openssl/aesgcm.c',
+                'jose/lib/openssl/aesgcmkw.c',
+                'jose/lib/openssl/aeskw.c',
+                'jose/lib/openssl/compat.c',
+                'jose/lib/openssl/dir.c',
+                'jose/lib/openssl/ec.c',
+                'jose/lib/openssl/ecdh.c',
+                'jose/lib/openssl/ecdhes.c',
+                'jose/lib/openssl/ecmr.c',
+                'jose/lib/openssl/ecdsa.c',
+                'jose/lib/openssl/hash.c',
+                'jose/lib/openssl/hmac.c',
+                'jose/lib/openssl/jwk.c',
+                'jose/lib/openssl/lock.c',
+                'jose/lib/openssl/misc.c',
+                'jose/lib/openssl/oct.c',
+                'jose/lib/openssl/pbes2.c',
+                'jose/lib/openssl/rsa.c',
+                'jose/lib/openssl/rsaes.c',
+            ]
+        }
+    ]
 }
