@@ -25,8 +25,9 @@ ADD ./docker-entrypoint.sh /docker-entrypoint.sh
 ADD ./src $DEPLOY_PATH/$APP_DIR
 ADD ./deps $DEPLOY_PATH/deps
 ADD ./binding.gyp $DEPLOY_PATH/binding.gyp
+ADD ./build.sh $DEPLOY_PATH/build.sh
 
-RUN chmod +x /docker-entrypoint.sh \
+RUN chmod +x /docker-entrypoint.sh $DEPLOY_PATH/build.sh \
   && chown -R $USER $DEPLOY_PATH
 
 USER $USER

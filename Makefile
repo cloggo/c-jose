@@ -22,8 +22,7 @@ pull:
 	docker pull $(IMAGE)
 
 debug: pull
-	$(DOCKER_RUN) $(NODEGYP_BIN) configure -- --no-duplicate-basename-check
-	$(DOCKER_RUN) $(NODE_PRE_GYP_BIN) build --debug -- --no-duplicate-basename-check
+	$(DOCKER_RUN) build.sh
 
 watch: pull
 	$(DOCKER_RUN) $(NODEMON_BIN) -e $(WATCH_EXTS) --watch app --watch test \
