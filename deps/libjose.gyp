@@ -2,6 +2,19 @@
     'includes': [ 'common-libjose.gypi' ],
     'targets': [
         {
+            'target_name': 'action_before_build',
+            'type': 'none',
+            'actions': [
+                {
+                    'action_name': 'patch jose file names',
+                    'inputs': [''],
+                    'outputs': [''],
+                    'action': ['sh', '-c', './patch.sh']
+                }
+            ]
+            
+        },
+        {
             'target_name': 'jose',
             'type': 'static_library',
             'product_prefix': 'lib',
@@ -9,6 +22,9 @@
                 'jose',
                 'jose/lib',
                 'jose/lib/openssl'
+            ],
+            'dependencies': [
+                'action_before_build'
             ],
             'sources': [
                 'jose/lib/misc.c',
