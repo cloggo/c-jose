@@ -4,8 +4,7 @@
     "version": "1.0.2",
     "main": "index.js",
     "scripts": {
-        "test": "mocha -R spec",
-        "install": "node-pre-gyp install --fallback-to-build"
+        "test": "mocha -R spec"
     },
     "repository": {
         "type": "git",
