@@ -1,4 +1,4 @@
-FROM registry.delite.ca/docker/base/node/dev:latest
+FROM registry.delite.ca/docker/base/dev/node:latest
 
 ENV APP_DIR='src'
 

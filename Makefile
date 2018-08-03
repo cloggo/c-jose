@@ -2,7 +2,7 @@ IMAGE_PATH := docker/lib/node/c-jose
 DOCKER_REGISTRY := registry.delite.ca
 IMAGE := $(DOCKER_REGISTRY)/$(IMAGE_PATH)
 
-DOCKER_RUN := docker run -it \
+DOCKER_RUN := docker run --user node -it \
   -e "NODE_ENV=test" \
 	-v "$(CURDIR)/tmp/node-gyp:/home/node/.node-gyp" \
 	-v "$(CURDIR)/src:/deploy/src" \
