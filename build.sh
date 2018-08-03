@@ -1,5 +1,7 @@
 #!/bin/sh
 
+git submodule update --init
+
 dup_names="misc.c jwk.c"
 src_dir=deps/jose/lib/openssl
 
