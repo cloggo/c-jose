@@ -2,3 +2,4 @@ build
 /TAGS
 node_modules
 tmp
+/lib/module/c_jose.node

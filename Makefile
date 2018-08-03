@@ -8,6 +8,7 @@ DOCKER_RUN := docker run -it \
 	-v "$(CURDIR)/src:/deploy/src" \
 	-v "$(CURDIR)/deps:/deploy/deps" \
 	-v "$(CURDIR)/test:/deploy/test" \
+	-v "$(CURDIR)/lib:/deploy/lib" \
 	-v "$(CURDIR)/tmp/build:/deploy/build" \
 	-v "$(CURDIR)/binding.gyp:/deploy/binding.gyp" \
 	$(IMAGE)
