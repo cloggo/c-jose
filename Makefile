@@ -20,7 +20,7 @@ NODE_PRE_GYP_BIN := $(NODE_MODULE_PATH)/node-pre-gyp
 
 WATCH_EXTS := js,json
 
-.PHONY: test watch pull build debug config clean
+.PHONY: test watch pull build debug config install clean
 
 pull:
 	docker pull $(IMAGE)
@@ -33,6 +33,9 @@ debug: config
 
 build: config
 	$(DOCKER_RUN) $(NODEGYP_BIN) build
+
+install:
+	$(DOCKER_RUN) npm install
 
 watch: pull
 	$(DOCKER_RUN) $(NODEMON_BIN) -e $(WATCH_EXTS) --watch app --watch test \
