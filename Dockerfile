@@ -7,7 +7,7 @@ EXPOSE 8080
 ENV USER='node' \
     APP_DIR='src' \
     DEPLOY_PATH='/deploy' \
-    NODE_ENV='production'
+    NODE_ENV='dev'
 
 WORKDIR $DEPLOY_PATH
 
