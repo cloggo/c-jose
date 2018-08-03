@@ -12,10 +12,11 @@ DOCKER_RUN := docker run -it \
 	-v "$(CURDIR)/binding.gyp:/deploy/binding.gyp" \
 	$(IMAGE)
 
-MOCHA_BIN := node_modules/.bin/mocha
-NODEMON_BIN := node_modules/.bin/nodemon
-NODEGYP_BIN := node_modules/.bin/node-gyp
-NODE_PRE_GYP_BIN := node_modules/.bin/node-pre-gyp
+NODE_MODULE_PATH := node_modules/.bin
+MOCHA_BIN := $(NODE_MODULE_PATH)/mocha
+NODEMON_BIN := $(NODE_MODULE_PATH)/nodemon
+NODEGYP_BIN := $(NODE_MODULE_PATH)/node-gyp
+NODE_PRE_GYP_BIN := $(NODE_MODULE_PATH)/node-pre-gyp
 
 WATCH_EXTS := js,json
 
