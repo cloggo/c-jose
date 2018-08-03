@@ -41,12 +41,5 @@
         "chai": "^4.1.2",
         "mocha": "^5.2.0",
         "supertest": "^3.1.0"
-    },
-    "binary": {
-        "module_name": "jose",
-        "module_path": "./lib/binding/{node_abi}-{platform}-{arch}",
-        "host": "https://mapbox-node-binary.s3.amazonaws.com",
-        "remote_path": "./{name}/v{version}/{toolset}/",
-        "package_name": "{node_abi}-{platform}-{arch}.tar.gz"
     }
 }
