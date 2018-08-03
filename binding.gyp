@@ -10,6 +10,9 @@
             'dependencies': [
                 'deps/libjose.gyp:jose'
             ],
+            'include_dirs': [
+                'deps/jose',
+            ],
             'libraries': [
                 '-lpthread',
                 '-lz',

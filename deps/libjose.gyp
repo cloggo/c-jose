@@ -12,7 +12,6 @@
                     'action': ['sh', '-c', './patch.sh']
                 }
             ]
-            
         },
         {
             'target_name': 'jose',
