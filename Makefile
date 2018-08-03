@@ -25,10 +25,7 @@ WATCH_EXTS := js,json
 pull:
 	docker pull $(IMAGE)
 
-patch:
-	./patch.sh
-
-config: pull patch
+config: pull
 	$(DOCKER_RUN) $(NODEGYP_BIN) configure -- --no-duplicate-basename-check
 
 debug: config
