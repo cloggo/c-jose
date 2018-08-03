@@ -28,7 +28,8 @@ ADD ./binding.gyp $DEPLOY_PATH/binding.gyp
 ADD ./build.sh $DEPLOY_PATH/build.sh
 
 RUN chmod +x /docker-entrypoint.sh $DEPLOY_PATH/build.sh \
-  && chown -R $USER $DEPLOY_PATH
+    && ln -sf /usr/lib/libcrypto.so.1.0.0 /usr/lib/libcrypto.so \
+    && chown -R $USER $DEPLOY_PATH
 
 USER $USER
 

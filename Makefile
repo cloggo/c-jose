@@ -2,11 +2,13 @@ IMAGE_PATH := docker/lib/node/c-jose
 DOCKER_REGISTRY := registry.delite.ca
 IMAGE := $(DOCKER_REGISTRY)/$(IMAGE_PATH)
 
-DOCKER_RUN := docker run --user root -it \
+DOCKER_RUN := docker run -it \
   -e "NODE_ENV=test" \
+	-v "$(CURDIR)/tmp:/home/node/.node-gyp" \
 	-v "$(CURDIR)/src:/deploy/src" \
 	-v "$(CURDIR)/deps:/deploy/deps" \
 	-v "$(CURDIR)/test:/deploy/test" \
+	-v "$(CURDIR)/build:/deploy/build" \
 	-v "$(CURDIR)/build.sh:/deploy/build.sh" \
 	-v "$(CURDIR)/binding.gyp:/deploy/binding.gyp" \
 	$(IMAGE)
@@ -23,8 +25,14 @@ WATCH_EXTS := js,json
 pull:
 	docker pull $(IMAGE)
 
-debug: pull
-	$(DOCKER_RUN) ./build.sh
+config: pull
+	$(DOCKER_RUN) $(NODEGYP_BIN) configure -- --no-duplicate-basename-check
+
+debug: config
+	$(DOCKER_RUN) $(NODEGYP_BIN) build --debug
+
+build: config
+	$(DOCKER_RUN) $(NODEGYP_BIN) build
 
 watch: pull
 	$(DOCKER_RUN) $(NODEMON_BIN) -e $(WATCH_EXTS) --watch app --watch test \
