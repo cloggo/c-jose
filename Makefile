@@ -4,12 +4,11 @@ IMAGE := $(DOCKER_REGISTRY)/$(IMAGE_PATH)
 
 DOCKER_RUN := docker run -it \
   -e "NODE_ENV=test" \
-	-v "$(CURDIR)/tmp:/home/node/.node-gyp" \
+	-v "$(CURDIR)/tmp/node-gyp:/home/node/.node-gyp" \
 	-v "$(CURDIR)/src:/deploy/src" \
 	-v "$(CURDIR)/deps:/deploy/deps" \
 	-v "$(CURDIR)/test:/deploy/test" \
-	-v "$(CURDIR)/build:/deploy/build" \
-	-v "$(CURDIR)/build.sh:/deploy/build.sh" \
+	-v "$(CURDIR)/tmp/build:/deploy/build" \
 	-v "$(CURDIR)/binding.gyp:/deploy/binding.gyp" \
 	$(IMAGE)
 
@@ -20,7 +19,7 @@ NODE_PRE_GYP_BIN := node_modules/.bin/node-pre-gyp
 
 WATCH_EXTS := js,json
 
-.PHONY: test pull
+.PHONY: test watch pull build debug config clean
 
 pull:
 	docker pull $(IMAGE)
@@ -41,3 +40,6 @@ watch: pull
 
 test: pull
 	$(DOCKER_RUN) $(MOCHA_BIN) --timeout 10000 "test/**/test-*.js"
+
+clean:
+	@RM -rf tmp/*
