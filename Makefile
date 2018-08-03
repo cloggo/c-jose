@@ -42,4 +42,4 @@ test: pull
 	$(DOCKER_RUN) $(MOCHA_BIN) --timeout 10000 "test/**/test-*.js"
 
 clean:
-	@RM -rf tmp/*
+	@RM -rf tmp
