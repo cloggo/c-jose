@@ -21,26 +21,15 @@
             ],
         },
         {
-            "target_name": "action_after_build",
-            "type": "none",
-            "dependencies": [ "c_jose" ],
-            "copies": [
-                {
-                    "files": [ "<(PRODUCT_DIR)/c_jose.node" ],
-                    "destination": "./lib/module/"
-                }
-            ]
-        },
-        {
             "target_name": "clean_up",
             "type": "none",
-            "dependencies": [ "action_after_build" ],
+            "dependencies": [ "c_jose" ],
             "actions": [
                 {
                     'action_name' : 'cleanup',
                     'inputs': [''],
                     'outputs': [''],
-                    'action': ['rm', '-rf', "<(PRODUCT_DIR)/obj.target"]
+                    'action': ['sh', '-c', "./cleanup.sh <(CONFIGURATION_NAME) <(PRODUCT_DIR)"]
                 }
             ]
         }

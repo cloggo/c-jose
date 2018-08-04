@@ -1,3 +1,3 @@
-var Jose = require('bindings')('./lib/module/c_jose.node');
+var Jose = require('bindings')('c_jose');
 
 module.exports = Jose;

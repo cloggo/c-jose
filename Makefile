@@ -22,7 +22,7 @@ pull:
 	docker pull $(IMAGE)
 
 config: pull
-	$(DOCKER_RUN) $(NODEGYP_BIN) configure -- --no-duplicate-basename-check
+	$(DOCKER_RUN) $(NODEGYP_BIN) configure -- --no-duplicate-basename-check 
 
 debug: config
 	$(DOCKER_RUN) $(NODEGYP_BIN) build --debug

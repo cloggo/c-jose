@@ -11,7 +11,7 @@
         "url": "git@gitlab.delite.ca:docker/lib/node/c-jose.git"
     },
     "engines": {
-        "node" : ">=8.4.0"
+        "node": ">=8.4.0"
     },
     "keywords": [
         "jws",
