@@ -21,13 +21,14 @@ WATCH_EXTS := js,json
 pull:
 	docker pull $(IMAGE)
 
-config: pull
+config: binding.gyp deps/libjose.gyp
 	$(DOCKER_RUN) $(NODEGYP_BIN) configure -- --no-duplicate-basename-check 
+	touch tmp/config.done
 
-debug: config
+debug: pull tmp/config.done
 	$(DOCKER_RUN) $(NODEGYP_BIN) build --debug
 
-build: config
+build: pull tmp/config.done
 	$(DOCKER_RUN) $(NODEGYP_BIN) build
 
 install:
@@ -38,7 +39,7 @@ watch: pull
 	$(MOCHA_BIN) --watch --recursive \
 	--watch-extensions $(WATCH_EXTS) "test/**/*.test.js"
 
-test: pull
+test: debug
 	$(DOCKER_RUN) $(MOCHA_BIN) --timeout 10000 "test/**/*.test.js"
 
 clean:
