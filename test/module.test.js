@@ -9,6 +9,7 @@ let path = require('path');
 let JOSE = require('..');
 let chai = require('chai');
 
+const kid = "6nLskcj2dYVXd7JUjFouB3Ne7So";
 const _fp = path.join(__dirname, './vector/test.luks.b64');
 let tv = fs.readFileSync(_fp);
 tv = tv.toString();
@@ -18,12 +19,19 @@ hdr_b64 = hdr_b64[1];
 describe('JWK', function() {
     chai.should();
 
-    let hdr = Buffer.from(hdr_b64, 'base64').toString('ascii');
+    // let hdr = Buffer.from(hdr_b64, 'base64').toString('ascii');
+    let hdrRaw = JOSE.jose_b64_dec_buf(hdr_b64);
     // console.log(hdr);
-    hdr = JSON.parse(hdr);
+    let hdr = JSON.parse(hdrRaw);
     describe('base64 decode', function() {
         it('clevis.pin should equal to "tang"', function() {
             hdr.clevis.pin.should.equal("tang");
+        });
+    });
+
+    describe('base64 encode', function() {
+        it('encoded string should recover b64', function() {
+            JOSE.jose_b64_enc_buf(hdrRaw).should.equal(hdr_b64);
         });
     });
 
@@ -60,7 +68,7 @@ describe('JWK', function() {
         });
     });
 
-    const dlen = JOSE.jose_jwk_thp_buf(null, "null", null, 0);
+    const dlen = JOSE.jose_jwk_thp_buf(null, "S1", null, 0);
 
     describe('buffer size', function() {
          it('calculate size', function() {
@@ -68,4 +76,5 @@ describe('JWK', function() {
         });
     });
 
+    let buf = new ArrayBuffer(dlen);
 });

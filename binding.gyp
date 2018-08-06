@@ -6,7 +6,12 @@
             "defines": [
                 'MODULE_NAME=c_jose'
             ],
-            "sources": [ "./src/module.c" ],
+            "sources": [
+                "./src/module.c",
+                "./src/json.c",
+                "./src/b64.c",
+                "./src/jwk.c"
+            ],
             'dependencies': [
                 'deps/libjose.gyp:jose'
             ],
