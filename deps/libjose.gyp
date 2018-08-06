@@ -56,6 +56,7 @@
                 'jose/lib/openssl/pbes2.c',
                 'jose/lib/openssl/rsa.c',
                 'jose/lib/openssl/rsaes.c',
+                'jose/lib/openssl/rsassa.c',
             ]
         }
     ]
