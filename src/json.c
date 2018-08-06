@@ -47,3 +47,40 @@ NAPI_METHOD(c_jose_json_dumps) {
   return result;
 }
 
+NAPI_METHOD(c_jose_json_foreach) {
+  napi_value thisVal;
+
+  NAPI_METHOD_THIS_ARG(2, thisVal);
+
+  napi_status status;
+
+  void *c_json;
+  status = napi_get_value_external(env, argv[0], &c_json);
+
+  assert(status == napi_ok);
+
+  size_t index;
+  json_t *value;
+
+  json_array_foreach((json_t*) c_json, index, value) {
+    napi_handle_scope scope;
+    napi_status status = napi_open_handle_scope(env, &scope);
+    assert(status == napi_ok);
+
+    napi_value jValue;
+    napi_value jIndex;
+
+    napi_create_uint32(env, index, &jIndex);
+    napi_create_external(env, value, c_jose_json_decref, NULL, &jValue);
+
+    napi_value jArgv[] = {jIndex, jValue};
+
+    status = napi_call_function(env, thisVal, argv[1], 2, jArgv, NULL);
+
+    status = napi_close_handle_scope(env, scope);
+    assert(status == napi_ok);
+  }
+
+  napi_get_null(env, &thisVal);
+  return thisVal;
+}

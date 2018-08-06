@@ -9,7 +9,7 @@ let path = require('path');
 let JOSE = require('..');
 let chai = require('chai');
 
-const kid = "6nLskcj2dYVXd7JUjFouB3Ne7So";
+// const kid = "6nLskcj2dYVXd7JUjFouB3Ne7So";
 const _fp = path.join(__dirname, './vector/test.luks.b64');
 let tv = fs.readFileSync(_fp);
 tv = tv.toString();
@@ -65,6 +65,18 @@ describe('JWK', function() {
     describe('jansson json_dumps ', function() {
         it('should recover the stringify json', function() {
             JSON.parse(encodedKeys).should.deep.equal(keys);
+        });
+    });
+
+    describe('json array', function() {
+        it('foreach element operation', function() {
+            let arr = [];
+            JOSE.jose_json_foreach(decodedKeys, function(index, value) {
+                arr.push(JOSE.jose_json_dumps(value));
+            });
+
+            arr = ['[', arr.join(","), ']'].join("");
+            JSON.parse(arr).should.deep.equal(keys);
         });
     });
 

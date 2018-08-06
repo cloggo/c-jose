@@ -39,16 +39,22 @@ void jose_init(void) {
 #endif /* OpenSSL < 1.1.0 */
 }
 
-void char_free(char **p) {
+bool free_char(char **p) {
+  printf("freeing char memory\n");
+
   if(*p) {
     free(*p);
   }
+
+  return 0;
 }
 
-void json_free(json_t **p) {
+bool free_json(json_t **p) {
   if(*p) {
     json_decref(*p);
   }
+
+  return 0;
 }
 
 napi_value Init(napi_env env, napi_value exports) {
@@ -63,6 +69,7 @@ napi_value Init(napi_env env, napi_value exports) {
     DECLARE_NAPI_METHOD("jose_json_dumps", c_jose_json_dumps),
     DECLARE_NAPI_METHOD("jose_b64_dec_buf", c_jose_b64_dec_buf),
     DECLARE_NAPI_METHOD("jose_b64_enc_buf", c_jose_b64_enc_buf),
+    DECLARE_NAPI_METHOD("jose_json_foreach", c_jose_json_foreach),
   };
 
   size_t n_desc = sizeof(descArray) / sizeof(napi_property_descriptor);

@@ -27,12 +27,23 @@
     return NULL;                                          \
   }
 
+#define NAPI_METHOD_THIS_ARG(MAX_ARGC, THIS_ARG)               \
+  napi_value argv[MAX_ARGC];                              \
+  size_t argc = MAX_ARGC;                                 \
+                                                          \
+  napi_get_cb_info(env, info, &argc, argv, &THIS_ARG, NULL); \
+                                                          \
+  if (argc < MAX_ARGC) {                                  \
+    napi_throw_error(env, "EINVAL", "Too few arguments"); \
+    return NULL;                                          \
+  }
 
-#define __CLEANUP__(cleanup_func) \
+
+#define __AUTO_CLEANUP__(cleanup_func) \
   __attribute__((cleanup(cleanup_func)))
 
-void char_free(char **p);
-void json_free(json_t **p);
+bool free_char(char **p);
+bool free_json(json_t **p);
 
 
 // =====
@@ -41,6 +52,7 @@ void c_jose_json_decref(napi_env env, void* finalize_data, void* finalize_hint);
 
 NAPI_METHOD(c_jose_json_loads);
 NAPI_METHOD(c_jose_json_dumps);
+NAPI_METHOD(c_jose_json_foreach);
 
 
 // =====
