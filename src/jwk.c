@@ -16,12 +16,12 @@ NAPI_METHOD(c_jose_jwk_thp_buf) {
   napi_valuetype resultType;
 
   size_t jwkLength = 0;
-  char* jwk = NULL;
+  char* jwk __CLEANUP__(char_free) = NULL;
 
   status = napi_typeof(env, argv[0], &resultType);
   assert(status == napi_ok);
 
-  json_t *jwk_json = NULL;
+  json_t *jwk_json __CLEANUP__(json_free) = NULL;
 
   if(resultType != napi_null) {
     status = napi_get_value_string_utf8(env, argv[0], NULL, 0, &jwkLength); \
@@ -30,7 +30,6 @@ NAPI_METHOD(c_jose_jwk_thp_buf) {
     status = napi_get_value_string_utf8(env, argv[0], jwk, jwkLength, &jwkLength); \
     assert(status == napi_ok);
     jwk_json = json_loads(jwk, 0, NULL);
-    free(jwk);
     assert(jwk_json);
   }
 
@@ -60,10 +59,6 @@ NAPI_METHOD(c_jose_jwk_thp_buf) {
   }
 
   size_t dlen = jose_jwk_thp_buf(NULL, jwk_json, alg, (uint8_t *) thp, thp_size);
-
-  if(jwk_json) {
-    json_decref((json_t *) jwk_json);
-  }
 
   napi_value result;
 

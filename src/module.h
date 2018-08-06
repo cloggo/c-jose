@@ -28,6 +28,13 @@
   }
 
 
+#define __CLEANUP__(cleanup_func) \
+  __attribute__((cleanup(cleanup_func)))
+
+void char_free(char **p);
+void json_free(json_t **p);
+
+
 // =====
 // JSON
 void c_jose_json_decref(napi_env env, void* finalize_data, void* finalize_hint);

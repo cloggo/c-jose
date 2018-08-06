@@ -1,5 +1,6 @@
 #include <node_api.h>
 #include <assert.h>
+#include <stdio.h>
 
 #include <lib/misc.h>
 #include <lib/openssl/misc.h>
@@ -36,6 +37,18 @@ void jose_init(void) {
 #if OPENSSL_VERSION_NUMBER < 0x10100000L
   locking_setup();
 #endif /* OpenSSL < 1.1.0 */
+}
+
+void char_free(char **p) {
+  if(*p) {
+    free(*p);
+  }
+}
+
+void json_free(json_t **p) {
+  if(*p) {
+    json_decref(*p);
+  }
 }
 
 napi_value Init(napi_env env, napi_value exports) {
