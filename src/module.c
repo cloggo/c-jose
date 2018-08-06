@@ -68,7 +68,8 @@ napi_value Init(napi_env env, napi_value exports) {
     DECLARE_NAPI_METHOD("jose_json_loads", c_jose_json_loads),
     DECLARE_NAPI_METHOD("jose_json_dumps", c_jose_json_dumps),
     DECLARE_NAPI_METHOD("jose_b64_dec_buf", c_jose_b64_dec_buf),
-    DECLARE_NAPI_METHOD("jose_b64_enc_buf", c_jose_b64_enc_buf),
+    DECLARE_NAPI_METHOD("jose_b64_enc_sbuf", c_jose_b64_enc_sbuf),
+    DECLARE_NAPI_METHOD("jose_b64_enc_bbuf", c_jose_b64_enc_bbuf),
     DECLARE_NAPI_METHOD("jose_json_foreach", c_jose_json_foreach),
   };
 

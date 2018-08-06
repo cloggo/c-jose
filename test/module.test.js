@@ -31,7 +31,7 @@ describe('JWK', function() {
 
     describe('base64 encode', function() {
         it('encoded string should recover b64', function() {
-            JOSE.jose_b64_enc_buf(hdrRaw).should.equal(hdr_b64);
+            JOSE.jose_b64_enc_sbuf(hdrRaw).should.equal(hdr_b64);
         });
     });
 
@@ -88,5 +88,18 @@ describe('JWK', function() {
         });
     });
 
-    let buf = new ArrayBuffer(dlen);
+
+    describe('calculate thumbprint', function() {
+        it('foreach element calculate thumbprint', function() {
+            let buf = new ArrayBuffer(dlen);
+            let arr = []
+            JOSE.jose_json_foreach(decodedKeys, function(index, value) {
+                JOSE.jose_jwk_thp_buf(value, "S1", buf);
+                arr.push(JOSE.jose_b64_enc_bbuf(buf));
+            });
+
+            arr.indexOf(kid).should.not.equal(-1);
+        });
+    });
+
 });

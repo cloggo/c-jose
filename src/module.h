@@ -62,5 +62,6 @@ NAPI_METHOD(c_jose_jwk_thp_buf);
 
 // =====
 // BASE64
-NAPI_METHOD(c_jose_b64_enc_buf);
+NAPI_METHOD(c_jose_b64_enc_sbuf);
+NAPI_METHOD(c_jose_b64_enc_bbuf);
 NAPI_METHOD(c_jose_b64_dec_buf);

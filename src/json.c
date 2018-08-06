@@ -57,6 +57,13 @@ NAPI_METHOD(c_jose_json_foreach) {
   void *c_json;
   status = napi_get_value_external(env, argv[0], &c_json);
 
+  napi_value result;
+
+  if(!json_array_size((json_t *)c_json)) {
+    napi_get_boolean(env, true, &result);
+    return result;
+  }
+
   assert(status == napi_ok);
 
   size_t index;
@@ -81,6 +88,6 @@ NAPI_METHOD(c_jose_json_foreach) {
     assert(status == napi_ok);
   }
 
-  napi_get_null(env, &thisVal);
-  return thisVal;
+  napi_get_boolean(env, false, &result);
+  return result;
 }
