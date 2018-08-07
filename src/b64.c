@@ -43,7 +43,7 @@ NAPI_METHOD(c_jose_b64_enc_bbuf) {
   void *bbuf = NULL;
   size_t bbufLength = 0;
 
-  status = napi_get_arraybuffer_info(env, argv[0], &bbuf, &bbufLength);
+  status = napi_get_buffer_info(env, argv[0], &bbuf, &bbufLength);
   assert(status == napi_ok);
 
   size_t outLength = jose_b64_enc_buf(bbuf, bbufLength, NULL, 0);

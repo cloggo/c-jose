@@ -91,7 +91,7 @@ describe('JWK', function() {
 
     describe('calculate thumbprint', function() {
         it('foreach element calculate thumbprint', function() {
-            let buf = new ArrayBuffer(dlen);
+            let buf = Buffer.alloc(dlen);
             let arr = []
             JOSE.jose_json_foreach(decodedKeys, function(index, value) {
                 JOSE.jose_jwk_thp_buf(value, "S1", buf);

@@ -38,7 +38,7 @@ NAPI_METHOD(c_jose_jwk_thp_buf) {
   assert(status == napi_ok);
 
   if(resultType != napi_null) {
-    status = napi_get_arraybuffer_info(env, argv[2], &thp, &thp_size);
+    status = napi_get_buffer_info(env, argv[2], &thp, &thp_size);
     assert(status == napi_ok);
   }
 
