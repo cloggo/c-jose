@@ -59,8 +59,10 @@ NAPI_METHOD(c_jose_json_foreach) {
 
   napi_value result;
 
-  if(!json_array_size((json_t *)c_json)) {
-    napi_get_boolean(env, true, &result);
+  bool is_array = json_is_array((json_t *)c_json);
+  napi_get_boolean(env, !is_array, &result);
+
+  if(!is_array){
     return result;
   }
 
@@ -88,6 +90,57 @@ NAPI_METHOD(c_jose_json_foreach) {
     assert(status == napi_ok);
   }
 
-  napi_get_boolean(env, false, &result);
+  return result;
+}
+
+#define create_uint32_value(name)               \
+  napi_value _##name;                             \
+  napi_create_uint32(env, name, &_##name);
+
+napi_value json_type_init(napi_env env) {
+  napi_value result;
+
+  napi_status status = napi_create_object(env, &result);
+  assert(status == napi_ok);
+
+  create_uint32_value(JSON_STRING);
+  create_uint32_value(JSON_INTEGER);
+  create_uint32_value(JSON_ARRAY);
+  create_uint32_value(JSON_REAL);
+  create_uint32_value(JSON_TRUE);
+  create_uint32_value(JSON_FALSE);
+  create_uint32_value(JSON_NULL);
+  create_uint32_value(JSON_OBJECT);
+
+  const napi_property_descriptor desc[] = {
+    DECLARE_NAPI_CONSTANT("JSON_STRING", _JSON_STRING),
+    DECLARE_NAPI_CONSTANT("JSON_INTEGER", _JSON_INTEGER),
+    DECLARE_NAPI_CONSTANT("JSON_ARRAY", _JSON_ARRAY),
+    DECLARE_NAPI_CONSTANT("JSON_REAL", _JSON_REAL),
+    DECLARE_NAPI_CONSTANT("JSON_TRUE", _JSON_TRUE),
+    DECLARE_NAPI_CONSTANT("JSON_FALSE", _JSON_FALSE),
+    DECLARE_NAPI_CONSTANT("JSON_NULL", _JSON_NULL),
+    DECLARE_NAPI_CONSTANT("JSON_OBJECT", _JSON_OBJECT),
+  };
+
+  size_t n_desc = sizeof(desc) / sizeof(napi_property_descriptor);
+
+  status = napi_define_properties(env, result, n_desc, desc);
+
+  return result;
+}
+
+NAPI_METHOD(c_jose_json_typeof) {
+  NAPI_METHOD_ARG(1);
+
+  napi_status status;
+
+  void *c_json;
+  status = napi_get_value_external(env, argv[0], &c_json);
+  assert(status == napi_ok);
+
+  napi_value result;
+  status = napi_create_uint32(env, json_typeof((json_t *)c_json), &result);
+  assert(status == napi_ok);
   return result;
 }

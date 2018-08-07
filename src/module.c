@@ -64,6 +64,7 @@ napi_value Init(napi_env env, napi_value exports) {
   napi_status status;
 
   napi_property_descriptor descArray[] = {
+    DECLARE_NAPI_CONSTANT("jose_json_type", json_type_init(env)),
     DECLARE_NAPI_METHOD("jose_jwk_thp_buf", c_jose_jwk_thp_buf),
     DECLARE_NAPI_METHOD("jose_json_loads", c_jose_json_loads),
     DECLARE_NAPI_METHOD("jose_json_dumps", c_jose_json_dumps),
@@ -71,6 +72,7 @@ napi_value Init(napi_env env, napi_value exports) {
     DECLARE_NAPI_METHOD("jose_b64_enc_sbuf", c_jose_b64_enc_sbuf),
     DECLARE_NAPI_METHOD("jose_b64_enc_bbuf", c_jose_b64_enc_bbuf),
     DECLARE_NAPI_METHOD("jose_json_foreach", c_jose_json_foreach),
+    DECLARE_NAPI_METHOD("jose_json_typeof", c_jose_json_typeof),
   };
 
   size_t n_desc = sizeof(descArray) / sizeof(napi_property_descriptor);

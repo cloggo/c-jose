@@ -4,6 +4,9 @@
 #define DECLARE_NAPI_METHOD(name, func)         \
   { name, 0, func, 0, 0, 0, napi_default, 0 }
 
+#define DECLARE_NAPI_CONSTANT(name, value)      \
+  { name, 0, 0, 0, 0, value, napi_default, 0 }
+
 #define JS_STRING_TO_C_CHAR(ENV, JSON, NAME, STATUS)                    \
   size_t NAME##Length;                                                  \
   STATUS = napi_get_value_string_utf8(ENV, JSON, NULL, 0, &NAME##Length); \
@@ -48,11 +51,13 @@ bool free_json(json_t **p);
 
 // =====
 // JSON
+napi_value json_type_init(napi_env env);
 void c_jose_json_decref(napi_env env, void* finalize_data, void* finalize_hint);
 
 NAPI_METHOD(c_jose_json_loads);
 NAPI_METHOD(c_jose_json_dumps);
 NAPI_METHOD(c_jose_json_foreach);
+NAPI_METHOD(c_jose_json_typeof);
 
 
 // =====

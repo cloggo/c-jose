@@ -23,6 +23,7 @@ describe('JWK', function() {
     let hdrRaw = JOSE.jose_b64_dec_buf(hdr_b64);
     // console.log(hdr);
     let hdr = JSON.parse(hdrRaw);
+    let url = hdr.clevis.tang.url;
     describe('base64 decode', function() {
         it('clevis.pin should equal to "tang"', function() {
             hdr.clevis.pin.should.equal("tang");
@@ -89,16 +90,40 @@ describe('JWK', function() {
     });
 
 
+    let srv;
+
     describe('calculate thumbprint', function() {
         it('foreach element calculate thumbprint', function() {
-            let buf = Buffer.alloc(dlen);
-            let arr = []
+            let buf = Buffer.allocUnsafe(dlen);
+            let arr = [];
+
             JOSE.jose_json_foreach(decodedKeys, function(index, value) {
                 JOSE.jose_jwk_thp_buf(value, "S1", buf);
-                arr.push(JOSE.jose_b64_enc_bbuf(buf));
+                let tmp = JOSE.jose_b64_enc_bbuf(buf);
+
+                if(tmp === kid) {
+                    srv = value;
+                }
+
+                arr.push(tmp);
             });
 
+            // console.log("value:", JOSE.jose_json_dumps(srv));
             arr.indexOf(kid).should.not.equal(-1);
+        });
+    });
+
+    describe('json type enumeration', function() {
+        it("JSON type", function() {
+            JOSE.jose_json_type.JSON_OBJECT.should.equal(0);
+            JOSE.jose_json_type.JSON_ARRAY.should.equal(1);
+            JOSE.jose_json_type.JSON_STRING.should.equal(2);
+        });
+    });
+
+    describe('json type of', function() {
+        it("array type", function() {
+            JOSE.jose_json_typeof(decodedKeys).should.equal(JOSE.jose_json_type.JSON_ARRAY);
         });
     });
 
