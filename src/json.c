@@ -215,3 +215,38 @@ NAPI_METHOD(c_jose_json_value_get) {
 
   return result;
 }
+
+NAPI_METHOD(c_jose_json_is_number) {
+  NAPI_METHOD_ARG(1);
+
+  napi_status status;
+
+  void *root;
+  status = napi_get_value_external(env, argv[0], &root);
+  assert(status == napi_ok);
+
+  napi_value result;
+
+  status = napi_get_boolean(env, json_is_number((json_t *) root), &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
+NAPI_METHOD(c_jose_json_number_value) {
+  NAPI_METHOD_ARG(1);
+
+  napi_status status;
+
+  void *root;
+  status = napi_get_value_external(env, argv[0], &root);
+  assert(status == napi_ok);
+
+  napi_value result;
+
+  status = napi_create_double(env, json_number_value((json_t *)root), &result);
+  assert(status == napi_ok);
+
+  return result;
+}
