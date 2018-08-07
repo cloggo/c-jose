@@ -59,6 +59,7 @@ NAPI_METHOD(c_jose_json_dumps);
 NAPI_METHOD(c_jose_json_foreach);
 NAPI_METHOD(c_jose_json_typeof);
 NAPI_METHOD(c_jose_json_get);
+NAPI_METHOD(c_jose_json_array_get);
 NAPI_METHOD(c_jose_json_value_get);
 NAPI_METHOD(c_jose_json_number_value);
 NAPI_METHOD(c_jose_json_is_number);
