@@ -18,6 +18,7 @@ hdr_b64 = hdr_b64[1];
 
 describe('JWK', function() {
     chai.should();
+    let expect = chai.expect;
 
     // let hdr = Buffer.from(hdr_b64, 'base64').toString('ascii');
     let hdrRaw = JOSE.jose_b64_dec_buf(hdr_b64);
@@ -124,6 +125,17 @@ describe('JWK', function() {
     describe('json type of', function() {
         it("array type", function() {
             JOSE.jose_json_typeof(decodedKeys).should.equal(JOSE.jose_json_type.JSON_ARRAY);
+        });
+    });
+
+    describe('json get', function() {
+        let hdr_cjson = JOSE.jose_json_loads(hdrRaw);
+        it("get kid", function() {
+            // console.log(JOSE.jose_json_dumps(hdr_cjson));
+            let kid_json = JOSE.jose_json_get(hdr_cjson, "kid");
+            JOSE.jose_json_typeof(kid_json).should.equal(JOSE.jose_json_type.JSON_STRING);
+            JOSE.jose_json_value_get(kid_json).should.equal(kid);
+            // JOSE.jose_json_dumps(kid_json).should.equal(kid);
         });
     });
 

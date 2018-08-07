@@ -7,13 +7,13 @@
 #define DECLARE_NAPI_CONSTANT(name, value)      \
   { name, 0, 0, 0, 0, value, napi_default, 0 }
 
-#define JS_STRING_TO_C_CHAR(ENV, JSON, NAME, STATUS)                    \
+#define JS_STRING_TO_C_CHAR(ENV, STR, NAME, STATUS)                    \
   size_t NAME##Length;                                                  \
-  STATUS = napi_get_value_string_utf8(ENV, JSON, NULL, 0, &NAME##Length); \
+  STATUS = napi_get_value_string_utf8(ENV, STR, NULL, 0, &NAME##Length); \
   assert(STATUS == napi_ok);                                            \
   NAME##Length += 1;                                                    \
   char NAME[NAME##Length];                                              \
-  STATUS = napi_get_value_string_utf8(ENV, JSON, NAME, NAME##Length, &NAME##Length); \
+  STATUS = napi_get_value_string_utf8(ENV, STR, NAME, NAME##Length, &NAME##Length); \
   assert(STATUS == napi_ok);
 
 #define NAPI_METHOD(name)                                 \
@@ -58,6 +58,8 @@ NAPI_METHOD(c_jose_json_loads);
 NAPI_METHOD(c_jose_json_dumps);
 NAPI_METHOD(c_jose_json_foreach);
 NAPI_METHOD(c_jose_json_typeof);
+NAPI_METHOD(c_jose_json_get);
+NAPI_METHOD(c_jose_json_value_get);
 
 
 // =====

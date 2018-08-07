@@ -144,3 +144,74 @@ NAPI_METHOD(c_jose_json_typeof) {
   assert(status == napi_ok);
   return result;
 }
+
+NAPI_METHOD(c_jose_json_get) {
+  NAPI_METHOD_ARG(2);
+
+  napi_status status;
+
+  void *root;
+  status = napi_get_value_external(env, argv[0], &root);
+  assert(status == napi_ok);
+
+  JS_STRING_TO_C_CHAR(env, argv[1], key, status);
+
+  json_t* child = json_object_get((json_t *)root, key);
+
+  napi_value result;
+
+  if(!child) {
+    napi_get_null(env, &result);
+    return result;
+  }
+
+  status = napi_create_external(env, child, c_jose_json_decref, NULL, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+NAPI_METHOD(c_jose_json_value_get) {
+  NAPI_METHOD_ARG(1);
+
+  napi_status status;
+
+  void *root;
+  status = napi_get_value_external(env, argv[0], &root);
+  assert(status == napi_ok);
+
+  json_type t = json_typeof((json_t *)root);
+
+  napi_value result;
+
+  switch(t) {
+  case JSON_STRING:
+    status = napi_create_string_utf8(env,
+                                     json_string_value((json_t *)root),
+                                     json_string_length((json_t *)root),
+                                     &result);
+    assert(status == napi_ok);
+    break;
+  case JSON_INTEGER:
+    status = napi_create_int64(env, json_integer_value((json_t *)root), &result);
+    assert(status == napi_ok);
+    break;
+  case JSON_REAL:
+    status = napi_create_double(env, json_real_value((json_t *)root), &result);
+    assert(status == napi_ok);
+    break;
+  case JSON_TRUE:
+    status = napi_get_boolean(env, json_boolean_value((json_t *)root), &result);
+    assert(status == napi_ok);
+    break;
+  case JSON_FALSE:
+    status = napi_get_boolean(env, json_boolean_value((json_t *)root), &result);
+    assert(status == napi_ok);
+    break;
+  default:
+    status = napi_get_null(env, &result);
+    assert(status == napi_ok);
+  }
+
+  return result;
+}
