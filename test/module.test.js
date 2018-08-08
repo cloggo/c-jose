@@ -25,6 +25,8 @@ describe('JWK', function() {
     // console.log(hdr);
     let hdr = JSON.parse(hdrRaw);
     let url = hdr.clevis.tang.url;
+    let chdr = JOSE.jose_json_loads(hdrRaw);
+
     describe('base64 decode', function() {
         it('clevis.pin should equal to "tang"', function() {
             hdr.clevis.pin.should.equal("tang");
@@ -34,14 +36,6 @@ describe('JWK', function() {
     describe('base64 encode', function() {
         it('encoded string should recover b64', function() {
             JOSE.jose_b64_enc_sbuf(hdrRaw).should.equal(hdr_b64);
-        });
-    });
-
-    const clt = hdr.epk;
-
-    describe('epk exists', function() {
-        it('hdr.epk should not equal to undefined', function() {
-            clt.should.not.be.undefined;
         });
     });
 
@@ -136,5 +130,26 @@ describe('JWK', function() {
             JOSE.jose_json_value_get(kid_json).should.equal(kid);
         });
     });
+
+    const clt = JOSE.jose_json_get(chdr, "epk");
+    // console.log(JOSE.jose_json_dumps(clt));
+
+    describe('key epk exists', function() {
+        it('hdr.epk should not equal to null', function() {
+            JOSE.jose_json_typeof(clt).should.equal(JOSE.jose_json_type.JSON_OBJECT);
+        });
+    });
+
+    const crv = JOSE.jose_json_get(clt, "crv");
+    const jwk_gen = JOSE.jose_json_loads(['{ "alg": "ECMR", "crv": "', JOSE.jose_json_value_get(crv), '" }'].join(""));
+    // console.log(JOSE.jose_json_dumps(jwk_gen));
+    const jwk_gen_expected = '{"alg":"ECMR","crv":"P-521","d":"AM4l0n186kOIGLw3ZVxHeoqOv6Kp5qLwciKMIV7YQVtf8y6CTgwYivGHPcluuOSN8k7quADkebuVUgNuurtfX0hS","key_ops":["deriveKey"],"kty":"EC","x":"ANZbajuu11O3Mo0rIYe-l8Wbl_55gZfriFtjcWsjBv3GMkdaew2hBqdcy4qjb5Vi1KvYV1gJ6tqK6XKBPnjQbuW3","y":"AREt-TD46vX4-kAY3xkGP_lw1_g11R81xTbiOIyLQiT9Tmr0MkUbs7wkhme8Eerp6c0-wHYaxhEmKE2D6Yov4TJC"}';
+
+    describe('generate new jwk', function() {
+        it('should successfully generate jwk', function() {
+            JOSE.jose_jwk_gen(jwk_gen).should.equal(true);
+        });
+    });
+
 
 });

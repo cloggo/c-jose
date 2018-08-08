@@ -78,6 +78,7 @@ napi_value Init(napi_env env, napi_value exports) {
     DECLARE_NAPI_METHOD("jose_json_value_get", c_jose_json_value_get),
     DECLARE_NAPI_METHOD("jose_json_is_number", c_jose_json_is_number),
     DECLARE_NAPI_METHOD("jose_json_number_value", c_jose_json_number_value),
+    DECLARE_NAPI_METHOD("jose_jwk_gen", c_jose_jwk_gen),
   };
 
   size_t n_desc = sizeof(descArray) / sizeof(napi_property_descriptor);

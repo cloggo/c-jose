@@ -11,6 +11,8 @@ void c_jose_json_decref(napi_env env, void* finalize_data, void* finalize_hint) 
   json_decref((json_t *) finalize_data);
 }
 
+
+// string -> json
 NAPI_METHOD(c_jose_json_loads) {
   NAPI_METHOD_ARG(1);
 
@@ -27,6 +29,8 @@ NAPI_METHOD(c_jose_json_loads) {
   return result;
 }
 
+
+// json -> utf8 string
 NAPI_METHOD(c_jose_json_dumps) {
   NAPI_METHOD_ARG(1);
 
@@ -46,6 +50,11 @@ NAPI_METHOD(c_jose_json_dumps) {
 
   return result;
 }
+
+
+// foreach(json_array, callback) => foreach index, value: call callback(index, value)
+// return: failed false if json_aray is array
+//         failed true if not array
 
 NAPI_METHOD(c_jose_json_foreach) {
   napi_value thisVal;
@@ -93,10 +102,13 @@ NAPI_METHOD(c_jose_json_foreach) {
   return result;
 }
 
+// helper macro
 #define create_uint32_value(name)               \
   napi_value _##name;                             \
   napi_create_uint32(env, name, &_##name);
 
+
+// create json type enumeration: json_type.JSON_ARRAY, json_type.JSON_STRING, ...
 napi_value json_type_init(napi_env env) {
   napi_value result;
 
@@ -130,6 +142,8 @@ napi_value json_type_init(napi_env env) {
   return result;
 }
 
+
+// typeof(json) -> json type
 NAPI_METHOD(c_jose_json_typeof) {
   NAPI_METHOD_ARG(1);
 
@@ -145,6 +159,8 @@ NAPI_METHOD(c_jose_json_typeof) {
   return result;
 }
 
+
+// array_get(json_array, index) -> return json at index
 NAPI_METHOD(c_jose_json_array_get) {
   NAPI_METHOD_ARG(2);
 
@@ -173,6 +189,11 @@ NAPI_METHOD(c_jose_json_array_get) {
   return result;
 }
 
+
+// get(json, key)
+// return: value of the corresponding key
+//         null if key doesn't exists
+
 NAPI_METHOD(c_jose_json_get) {
   NAPI_METHOD_ARG(2);
 
@@ -199,6 +220,9 @@ NAPI_METHOD(c_jose_json_get) {
   return result;
 }
 
+
+// assumed it is a value type
+// the actual value of data
 NAPI_METHOD(c_jose_json_value_get) {
   NAPI_METHOD_ARG(1);
 
@@ -244,6 +268,29 @@ NAPI_METHOD(c_jose_json_value_get) {
   return result;
 }
 
+
+// is_value(json) -> true: not (type object or type array)
+NAPI_METHOD(c_jose_json_is_value) {
+  NAPI_METHOD_ARG(1);
+
+  napi_status status;
+
+  void *root;
+  status = napi_get_value_external(env, argv[0], &root);
+  assert(status == napi_ok);
+
+  napi_value result;
+
+  status = napi_get_boolean(env,
+                            !(json_is_object((json_t *) root)
+                              || json_is_array((json_t *) root)),
+                            &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
 NAPI_METHOD(c_jose_json_is_number) {
   NAPI_METHOD_ARG(1);
 
@@ -278,3 +325,4 @@ NAPI_METHOD(c_jose_json_number_value) {
 
   return result;
 }
+

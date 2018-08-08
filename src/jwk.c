@@ -54,3 +54,21 @@ NAPI_METHOD(c_jose_jwk_thp_buf) {
 
 }
 
+
+NAPI_METHOD(c_jose_jwk_gen) {
+  NAPI_METHOD_ARG(1);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  bool out = jose_jwk_gen(NULL, (json_t *)json);
+
+  napi_value result;
+  status = napi_get_boolean(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}

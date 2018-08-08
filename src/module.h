@@ -50,6 +50,12 @@ bool free_json(json_t **p);
 
 
 // =====
+// BASE64
+NAPI_METHOD(c_jose_b64_enc_sbuf);
+NAPI_METHOD(c_jose_b64_enc_bbuf);
+NAPI_METHOD(c_jose_b64_dec_buf);
+
+// =====
 // JSON
 napi_value json_type_init(napi_env env);
 void c_jose_json_decref(napi_env env, void* finalize_data, void* finalize_hint);
@@ -68,10 +74,4 @@ NAPI_METHOD(c_jose_json_is_number);
 // =====
 // JWK
 NAPI_METHOD(c_jose_jwk_thp_buf);
-
-
-// =====
-// BASE64
-NAPI_METHOD(c_jose_b64_enc_sbuf);
-NAPI_METHOD(c_jose_b64_enc_bbuf);
-NAPI_METHOD(c_jose_b64_dec_buf);
+NAPI_METHOD(c_jose_jwk_gen);
