@@ -141,15 +141,29 @@ describe('JWK', function() {
     });
 
     const crv = JOSE.jose_json_get(clt, "crv");
-    const jwk_gen = JOSE.jose_json_loads(['{ "alg": "ECMR", "crv": "', JOSE.jose_json_value_get(crv), '" }'].join(""));
-    // console.log(JOSE.jose_json_dumps(jwk_gen));
-    const jwk_gen_expected = '{"alg":"ECMR","crv":"P-521","d":"AM4l0n186kOIGLw3ZVxHeoqOv6Kp5qLwciKMIV7YQVtf8y6CTgwYivGHPcluuOSN8k7quADkebuVUgNuurtfX0hS","key_ops":["deriveKey"],"kty":"EC","x":"ANZbajuu11O3Mo0rIYe-l8Wbl_55gZfriFtjcWsjBv3GMkdaew2hBqdcy4qjb5Vi1KvYV1gJ6tqK6XKBPnjQbuW3","y":"AREt-TD46vX4-kAY3xkGP_lw1_g11R81xTbiOIyLQiT9Tmr0MkUbs7wkhme8Eerp6c0-wHYaxhEmKE2D6Yov4TJC"}';
-
+    var eph;
     describe('generate new jwk', function() {
+        eph = JOSE.jose_json_loads(['{ "alg": "ECMR", "crv": "', JOSE.jose_json_value_get(crv), '" }'].join(""));
+        const status = JOSE.jose_jwk_gen(eph);
         it('should successfully generate jwk', function() {
-            JOSE.jose_jwk_gen(jwk_gen).should.equal(true);
+            // Anything code inside it will not modify outside variables
+            expect(status).equal(true);
         });
     });
 
+    const alg = JOSE.jose_json_loads('{"alg": "ECMR"}');
+    let xfr = JOSE.jose_jwk_exc(clt, eph);
+    let r_status = JOSE.jose_json_object_update(xfr, alg);
 
+    describe('multiply elliptic curve', function() {
+        it('should successfully generate jwk', function() {
+            // Anything code inside it will not modify outside variables
+            expect(r_status).above(-1);
+            expect(xfr).not.equal(null);
+            const alg_from_get = JOSE.jose_json_get(xfr, "alg");
+            expect(alg_from_get).not.equal(null);
+            JOSE.jose_json_value_get(alg_from_get).should.equal("ECMR");
+        });
+
+    });
 });

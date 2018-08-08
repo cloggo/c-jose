@@ -69,9 +69,11 @@ NAPI_METHOD(c_jose_json_array_get);
 NAPI_METHOD(c_jose_json_value_get);
 NAPI_METHOD(c_jose_json_number_value);
 NAPI_METHOD(c_jose_json_is_number);
+NAPI_METHOD(c_jose_json_object_update);
 
 
 // =====
 // JWK
 NAPI_METHOD(c_jose_jwk_thp_buf);
 NAPI_METHOD(c_jose_jwk_gen);
+NAPI_METHOD(c_jose_jwk_exc);

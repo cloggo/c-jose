@@ -14,13 +14,29 @@ void c_jose_json_decref(napi_env env, void* finalize_data, void* finalize_hint) 
 
 // string -> json
 NAPI_METHOD(c_jose_json_loads) {
-  NAPI_METHOD_ARG(1);
+  napi_value argv[2];
+  size_t argc = 2;
+  napi_get_cb_info(env, info, &argc, argv, NULL, NULL);
 
   napi_status status;
 
+  uint32_t flags = 0;
+
+  switch(argc) {
+  case 1:
+    break;
+  case 2:
+    status = napi_get_value_uint32(env, argv[1], &flags);
+    assert(status == napi_ok);
+    break;
+  default:
+    napi_throw_error(env, "EINVAL", "Invalid arguments"); \
+    return NULL;                                          \
+  }
+
   JS_STRING_TO_C_CHAR(env, argv[0], json, status);
 
-  json_t *c_json = json_loads(json, 0, NULL);
+  json_t *c_json = json_loads(json, flags, NULL);
 
   napi_value result;
 
@@ -326,3 +342,27 @@ NAPI_METHOD(c_jose_json_number_value) {
   return result;
 }
 
+NAPI_METHOD(c_jose_json_object_update) {
+
+  NAPI_METHOD_ARG(2);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  void *other;
+  status = napi_get_value_external(env, argv[1], &other);
+  assert(status == napi_ok);
+
+
+  int value = json_object_update((json_t *)json, (json_t *)other);
+
+  napi_value result;
+
+  status = napi_create_int32(env, value, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
