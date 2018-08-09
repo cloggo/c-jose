@@ -59,6 +59,7 @@ NAPI_METHOD(c_jose_b64_dec_buf);
 // JSON
 napi_value json_type_init(napi_env env);
 void c_jose_json_decref(napi_env env, void* finalize_data, void* finalize_hint);
+void c_jose_io_decref(napi_env env, void* finalize_data, void* finalize_hint);
 
 NAPI_METHOD(c_jose_json_loads);
 NAPI_METHOD(c_jose_json_dumps);
@@ -86,3 +87,9 @@ NAPI_METHOD(c_jose_jwk_prm);
 NAPI_METHOD(c_jose_jwe_hdr);
 NAPI_METHOD(c_jose_jwe_enc);
 NAPI_METHOD(c_jose_jwe_dec);
+NAPI_METHOD(c_jose_jwe_enc_jwk);
+NAPI_METHOD(c_jose_jwe_dec_jwk);
+NAPI_METHOD(c_jose_jwe_enc_io);
+NAPI_METHOD(c_jose_jwe_dec_io);
+NAPI_METHOD(c_jose_jwe_enc_cek);
+NAPI_METHOD(c_jose_jwe_dec_cek);

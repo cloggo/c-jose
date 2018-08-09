@@ -86,6 +86,12 @@ napi_value Init(napi_env env, napi_value exports) {
     DECLARE_NAPI_METHOD("jose_jwe_hdr", c_jose_jwe_hdr),
     DECLARE_NAPI_METHOD("jose_jwe_enc", c_jose_jwe_enc),
     DECLARE_NAPI_METHOD("jose_jwe_dec", c_jose_jwe_dec),
+    DECLARE_NAPI_METHOD("jose_jwe_enc_jwk", c_jose_jwe_enc_jwk),
+    DECLARE_NAPI_METHOD("jose_jwe_dec_jwk", c_jose_jwe_dec_jwk),
+    DECLARE_NAPI_METHOD("jose_jwe_enc_cek", c_jose_jwe_enc_cek),
+    DECLARE_NAPI_METHOD("jose_jwe_dec_cek", c_jose_jwe_dec_cek),
+    DECLARE_NAPI_METHOD("jose_jwe_enc_io", c_jose_jwe_enc_io),
+    DECLARE_NAPI_METHOD("jose_jwe_dec_io", c_jose_jwe_dec_io),
   };
 
   size_t n_desc = sizeof(descArray) / sizeof(napi_property_descriptor);
