@@ -81,6 +81,8 @@ napi_value Init(napi_env env, napi_value exports) {
     DECLARE_NAPI_METHOD("jose_jwk_thp_buf", c_jose_jwk_thp_buf),
     DECLARE_NAPI_METHOD("jose_jwk_gen", c_jose_jwk_gen),
     DECLARE_NAPI_METHOD("jose_jwk_exc", c_jose_jwk_exc),
+    DECLARE_NAPI_METHOD("jose_jwk_pub", c_jose_jwk_pub),
+    DECLARE_NAPI_METHOD("jose_jwk_prm", c_jose_jwk_prm),
   };
 
   size_t n_desc = sizeof(descArray) / sizeof(napi_property_descriptor);

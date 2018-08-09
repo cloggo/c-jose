@@ -77,3 +77,5 @@ NAPI_METHOD(c_jose_json_object_update);
 NAPI_METHOD(c_jose_jwk_thp_buf);
 NAPI_METHOD(c_jose_jwk_gen);
 NAPI_METHOD(c_jose_jwk_exc);
+NAPI_METHOD(c_jose_jwk_pub);
+NAPI_METHOD(c_jose_jwk_prm);
