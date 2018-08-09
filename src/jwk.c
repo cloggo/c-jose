@@ -136,7 +136,7 @@ NAPI_METHOD(c_jose_jwk_prm) {
 
   JS_STRING_TO_C_CHAR(env, argv[2], op, status);
 
-  bool out = jose_jwk_prm(NULL, (json_t *)json);
+  bool out = jose_jwk_prm(NULL, (json_t *)json, req, op);
 
   napi_value result;
 

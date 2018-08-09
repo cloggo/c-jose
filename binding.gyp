@@ -10,6 +10,7 @@
                 "./src/module.c",
                 "./src/json.c",
                 "./src/b64.c",
+                "./src/jwe.c",
                 "./src/jwk.c"
             ],
             'dependencies': [

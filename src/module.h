@@ -79,3 +79,10 @@ NAPI_METHOD(c_jose_jwk_gen);
 NAPI_METHOD(c_jose_jwk_exc);
 NAPI_METHOD(c_jose_jwk_pub);
 NAPI_METHOD(c_jose_jwk_prm);
+
+// =====
+// JWE
+
+NAPI_METHOD(c_jose_jwe_hdr);
+NAPI_METHOD(c_jose_jwe_enc);
+NAPI_METHOD(c_jose_jwe_dec);
