@@ -166,4 +166,7 @@ describe('JWK', function() {
         });
 
     });
+
+    console.log(kid);
+    console.log(JOSE.jose_json_dumps(xfr));
 });

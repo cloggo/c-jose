@@ -10,7 +10,6 @@
 
 
 void c_jose_io_decref(napi_env env, void* finalize_data, void* finalize_hint) {
-  /* json_decrefp((json_t *) finalize_data); */
   jose_io_decref((jose_io_t *) finalize_data);
 }
 

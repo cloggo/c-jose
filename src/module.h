@@ -93,3 +93,6 @@ NAPI_METHOD(c_jose_jwe_enc_io);
 NAPI_METHOD(c_jose_jwe_dec_io);
 NAPI_METHOD(c_jose_jwe_enc_cek);
 NAPI_METHOD(c_jose_jwe_dec_cek);
+NAPI_METHOD(c_jose_jws_hdr);
+NAPI_METHOD(c_jose_jws_sig);
+NAPI_METHOD(c_jose_jws_sig_io);

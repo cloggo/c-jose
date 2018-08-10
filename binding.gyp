@@ -11,6 +11,7 @@
                 "./src/json.c",
                 "./src/b64.c",
                 "./src/jwe.c",
+                "./src/jws.c",
                 "./src/jwk.c"
             ],
             'dependencies': [
