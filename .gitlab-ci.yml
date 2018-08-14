@@ -17,6 +17,7 @@ test:
   tags:
     - linux
   script:
+    - ls $CI_PROJECT_DIR
     - echo $DOCKER_RUN
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull $DEV_IMAGE
