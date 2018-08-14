@@ -2,7 +2,6 @@ image: registry.delite.ca/docker/docker:latest
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  DEV_IMAGE: registry.delite.ca/docker/base/node/c-jose:latest
   NODE_MODULE_PATH: node_modules/.bin
   MOCHA_BIN: $NODE_MODULE_PATH/mocha
   DOCKER_RUN: docker run --user root -t -e NODE_ENV=test -v $CI_PROJECT_DIR:/deploy $DEV_IMAGE
@@ -11,14 +10,11 @@ stages:
   - test
 
 test:
+  image: registry.delite.ca/docker/base/node/c-jose:latest
   stage: test
   only:
     - master
   tags:
     - linux
   script:
-    - echo $DOCKER_RUN
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker pull $DEV_IMAGE
-    - $DOCKER_RUN ls -la /deploy
-    - $DOCKER_RUN $MOCHA_BIN --timeout 100 "test/**/*.test.js"
+    - $MOCHA_BIN --timeout 100 "test/**/*.test.js"
