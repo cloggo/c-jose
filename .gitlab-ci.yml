@@ -19,4 +19,5 @@ test:
   script:
     - pwd
     - ls -la
+    - npm install
     - $MOCHA_BIN --timeout 100 "test/**/*.test.js"
