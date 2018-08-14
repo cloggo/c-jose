@@ -5,7 +5,7 @@ variables:
   DEV_IMAGE: registry.delite.ca/docker/base/node/c-jose:latest
   NODE_MODULE_PATH: node_modules/.bin
   MOCHA_BIN: $NODE_MODULE_PATH/mocha
-  DOCKER_RUN: docker run -t -e NODE_ENV=test -v $CI_PROJECT_DIR:/deploy $DEV_IMAGE
+  DOCKER_RUN: docker run --user root -t -e NODE_ENV=test -v $CI_PROJECT_DIR:/deploy $DEV_IMAGE
 
 stages:
   - test
