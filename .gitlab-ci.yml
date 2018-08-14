@@ -6,7 +6,7 @@ variables:
   NODE_MODULE_PATH: node_modules/.bin
   MOCHA_BIN: $NODE_MODULE_PATH/mocha
   DOCKER_RUN: |
-    docker run --user node -it -e "NODE_ENV=test"
+    docker run --user node -t -e "NODE_ENV=test"
     -v "./tmp/node-gyp:/home/node/.node-gyp"
     -v "./:/deploy" $DEV_IMAGE
 
