@@ -2,35 +2,24 @@ image: registry.delite.ca/docker/docker:latest
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  CONTAINER_BUILD_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
-  DEPLOY_HOST: admin@tang.delite.ca
-  DEPLOY_CMD: ssh -p 2222 -o StrictHostKeyChecking=no -i /tmp/id_rsa ${DEPLOY_HOST}
-  PLAY_CMD: ansible-playbook -i ./hosts.ini
-  HOME: /root
-  
+  DEV_IMAGE: $CI_REGISTRY/docker/base/node/c-jose:latest
+  NODE_MODULE_PATH: node_modules/.bin
+  MOCHA_BIN: $NODE_MODULE_PATH/mocha
+  DOCKER_RUN: |
+    docker run --user node -it -e "NODE_ENV=test"
+    -v "./tmp/node-gyp:/home/node/.node-gyp"
+    -v "./:/deploy" $DEV_IMAGE
+
 stages:
-  - build
-  - release
+  - test
 
-build:
-  stage: build
-  tags:
-    - linux
-  except:
-    - deploy
-  script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build -t $CONTAINER_BUILD_IMAGE .
-    - docker push $CONTAINER_BUILD_IMAGE 
-
-release:
-  stage: release
+test:
+  stage: test
   only:
     - master
   tags:
     - linux
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker tag $CONTAINER_BUILD_IMAGE $CONTAINER_RELEASE_IMAGE
-    - docker push $CONTAINER_RELEASE_IMAGE
+    - docker pull $DEV_IMAGE
+    - $DOCKER_RUN $MOCHA_BIN --timeout 100 "test/**/*.test.js"
