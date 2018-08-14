@@ -17,4 +17,6 @@ test:
   tags:
     - linux
   script:
+    - pwd
+    - ls -la
     - $MOCHA_BIN --timeout 100 "test/**/*.test.js"
