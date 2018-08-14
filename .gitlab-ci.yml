@@ -11,8 +11,7 @@ stages:
 
 test:
   image: registry.delite.ca/docker/base/node/c-jose:latest
-    name: "c-jose"
-    entrypoint: ["/bin/bash"]
+    entrypoint: [""]
   stage: test
   only:
     - master
