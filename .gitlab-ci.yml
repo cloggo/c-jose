@@ -16,7 +16,8 @@ test:
     - master
   tags:
     - linux
-  script:
+    script:
+    - echo $DOCKER_RUN
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull $DEV_IMAGE
     - $DOCKER_RUN $MOCHA_BIN --timeout 100 "test/**/*.test.js"
