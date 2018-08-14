@@ -17,9 +17,7 @@ test:
   tags:
     - linux
   script:
-    - cat $CI_PROJECT_DIR/package.json
-    - ls $CI_PROJECT_DIR
-    - echo $DOCKER_RUN
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull $DEV_IMAGE
+    - $DOCKER_RUN cat package.json
     - $DOCKER_RUN $MOCHA_BIN --timeout 100 "test/**/*.test.js"
