@@ -1,4 +1,4 @@
-IMAGE_PATH := docker/lib/node/c-jose
+IMAGE_PATH := docker/base/node/10:c-jose
 DOCKER_REGISTRY := registry.delite.ca
 IMAGE := $(DOCKER_REGISTRY)/$(IMAGE_PATH)
 
@@ -21,8 +21,11 @@ WATCH_EXTS := js,json
 pull:
 	docker pull $(IMAGE)
 
-tmp/config.done: binding.gyp deps/libjose.gyp
-	$(DOCKER_RUN) $(NODEGYP_BIN) configure -- --no-duplicate-basename-check 
+node_modules:
+	$(DOCKER_RUN) npm install
+
+tmp/config.done: binding.gyp deps/libjose.gyp node_modules
+	$(DOCKER_RUN) $(NODEGYP_BIN) configure -- --no-duplicate-basename-check
 	touch tmp/config.done
 
 debug: pull tmp/config.done
