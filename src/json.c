@@ -195,7 +195,7 @@ NAPI_METHOD(c_jose_json_array_get) {
   napi_value result;
 
   if(!child) {
-    napi_get_null(env, &result);
+    napi_get_undefined(env, &result);
     return result;
   }
 
@@ -226,7 +226,7 @@ NAPI_METHOD(c_jose_json_get) {
   napi_value result;
 
   if(!child) {
-    napi_get_null(env, &result);
+    napi_get_undefined(env, &result);
     return result;
   }
 
@@ -277,7 +277,7 @@ NAPI_METHOD(c_jose_json_value_get) {
     assert(status == napi_ok);
     break;
   default:
-    status = napi_get_null(env, &result);
+    status = napi_get_undefined(env, &result);
     assert(status == napi_ok);
   }
 

@@ -20,7 +20,7 @@ NAPI_METHOD(c_jose_jwk_thp_buf) {
   status = napi_typeof(env, argv[0], &resultType);
   assert(status == napi_ok);
 
-  if(resultType != napi_null) {
+  if(resultType != napi_undefined) {
     status = napi_get_value_external(env, argv[0], &jwk);
   }
 
@@ -37,7 +37,7 @@ NAPI_METHOD(c_jose_jwk_thp_buf) {
   status = napi_typeof(env, argv[2], &resultType);
   assert(status == napi_ok);
 
-  if(resultType != napi_null) {
+  if(resultType != napi_undefined) {
     status = napi_get_buffer_info(env, argv[2], &thp, &thp_size);
     assert(status == napi_ok);
   }
@@ -90,7 +90,7 @@ NAPI_METHOD(c_jose_jwk_exc) {
   napi_value result;
 
   if(!out) {
-    status = napi_get_null(env, &result);
+    status = napi_get_undefined(env, &result);
     assert(status == napi_ok);
     return result;
   }

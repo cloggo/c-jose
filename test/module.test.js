@@ -76,7 +76,7 @@ describe('JWK', function() {
         });
     });
 
-    const dlen = JOSE.jose_jwk_thp_buf(null, "S1", null, 0);
+    const dlen = JOSE.jose_jwk_thp_buf(undefined, "S1", undefined, 0);
 
     describe('buffer size', function() {
          it('calculate size', function() {
@@ -159,9 +159,9 @@ describe('JWK', function() {
         it('should successfully generate jwk', function() {
             // Anything code inside it will not modify outside variables
             expect(r_status).above(-1);
-            expect(xfr).not.equal(null);
+            expect(xfr).not.equal(undefined);
             const alg_from_get = JOSE.jose_json_get(xfr, "alg");
-            expect(alg_from_get).not.equal(null);
+            expect(alg_from_get).not.equal(undefined);
             JOSE.jose_json_value_get(alg_from_get).should.equal("ECMR");
         });
 

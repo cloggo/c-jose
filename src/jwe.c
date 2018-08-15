@@ -29,7 +29,7 @@ NAPI_METHOD(c_jose_jwe_hdr) {
   status = napi_typeof(env, argv[1], &resultType);
   assert(status == napi_ok);
 
-  if(resultType != napi_null) {
+  if(resultType != napi_undefined) {
     status = napi_get_value_external(env, argv[1], &rcp);
     assert(status == napi_ok);
   }
@@ -62,7 +62,7 @@ NAPI_METHOD(c_jose_jwe_enc) {
   status = napi_typeof(env, argv[1], &resultType);
   assert(status == napi_ok);
 
-  if(resultType != napi_null) {
+  if(resultType != napi_undefined) {
     status = napi_get_value_external(env, argv[1], &rcp);
     assert(status == napi_ok);
   }
@@ -103,7 +103,7 @@ NAPI_METHOD(c_jose_jwe_dec) {
   status = napi_typeof(env, argv[1], &resultType);
   assert(status == napi_ok);
 
-  if(resultType != napi_null) {
+  if(resultType != napi_undefined) {
     status = napi_get_value_external(env, argv[1], &rcp);
     assert(status == napi_ok);
   }
@@ -142,7 +142,7 @@ NAPI_METHOD(c_jose_jwe_enc_jwk) {
   status = napi_typeof(env, argv[1], &resultType);
   assert(status == napi_ok);
 
-  if(resultType != napi_null) {
+  if(resultType != napi_undefined) {
     status = napi_get_value_external(env, argv[1], &rcp);
     assert(status == napi_ok);
   }
@@ -179,7 +179,7 @@ NAPI_METHOD(c_jose_jwe_dec_jwk) {
   status = napi_typeof(env, argv[1], &resultType);
   assert(status == napi_ok);
 
-  if(resultType != napi_null) {
+  if(resultType != napi_undefined) {
     status = napi_get_value_external(env, argv[1], &rcp);
     assert(status == napi_ok);
   }
@@ -192,7 +192,7 @@ NAPI_METHOD(c_jose_jwe_dec_jwk) {
   napi_value result;
 
   if(!out) {
-    status = napi_get_null(env, &result);
+    status = napi_get_undefined(env, &result);
     assert(status == napi_ok);
     return result;
   }
@@ -223,7 +223,7 @@ NAPI_METHOD(c_jose_jwe_enc_io) {
   status = napi_typeof(env, argv[1], &resultType);
   assert(status == napi_ok);
 
-  if(resultType != napi_null) {
+  if(resultType != napi_undefined) {
     status = napi_get_value_external(env, argv[1], &rcp);
     assert(status == napi_ok);
   }
@@ -239,7 +239,7 @@ NAPI_METHOD(c_jose_jwe_enc_io) {
   napi_value result;
 
   if(!out) {
-    status = napi_get_null(env, &result);
+    status = napi_get_undefined(env, &result);
     assert(status == napi_ok);
     return result;
   }
@@ -297,7 +297,7 @@ NAPI_METHOD(c_jose_jwe_dec_io) {
   status = napi_typeof(env, argv[1], &resultType);
   assert(status == napi_ok);
 
-  if(resultType != napi_null) {
+  if(resultType != napi_undefined) {
     status = napi_get_value_external(env, argv[1], &rcp);
     assert(status == napi_ok);
   }
@@ -313,7 +313,7 @@ NAPI_METHOD(c_jose_jwe_dec_io) {
   napi_value result;
 
   if(!out) {
-    status = napi_get_null(env, &result);
+    status = napi_get_undefined(env, &result);
     assert(status == napi_ok);
     return result;
   }
