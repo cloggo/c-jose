@@ -17,5 +17,6 @@ test:
   tags:
     - linux
   script:
+    - NODE_ENV=test
     - npm install
     - $MOCHA_BIN --timeout 100 "test/**/*.test.js"
