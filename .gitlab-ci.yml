@@ -20,6 +20,7 @@ test:
   script:
     - NODE_ENV=test
     - npm install node-gyp
+    - $NODEGYP_BIN configure -- --no-duplicate-basename-check
     - $NODEGYP_BIN build --debug
     - npm install
     - $MOCHA_BIN --timeout 100 "test/**/*.test.js"
