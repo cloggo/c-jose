@@ -141,7 +141,7 @@ describe('JWK', function() {
     });
 
     const crv = JOSE.jose_json_get(clt, "crv");
-    var eph;
+    let eph;
     describe('generate new jwk', function() {
         eph = JOSE.jose_json_loads(['{ "alg": "ECMR", "crv": "', JOSE.jose_json_value_get(crv), '" }'].join(""));
         const status = JOSE.jose_jwk_gen(eph);
