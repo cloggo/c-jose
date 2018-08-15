@@ -2,9 +2,9 @@ build
 /TAGS
 node_modules
 tmp
-/lib/module/c_jose.node
 /package-lock.json
 lib
-tests
-doc
+deps/jose/doc/**/*
+deps/jose/tests/**/*
+deps/jose/cmd/**/*
 jfrog
