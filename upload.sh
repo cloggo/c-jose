@@ -1,0 +1,1 @@
+jfrog/api/upload.sh

@@ -5,3 +5,5 @@ tmp
 /lib/module/c_jose.node
 /package-lock.json
 lib
+deps/jose
+jfrog

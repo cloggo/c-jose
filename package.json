@@ -4,7 +4,8 @@
     "version": "1.0.3",
     "main": "index.js",
     "scripts": {
-        "test": "mocha -R spec"
+        "preinstall": "npm install node-pre-gyp",
+        "install": "node-pre-gyp install --fallback-to-build"
     },
     "repository": {
         "type": "git",
@@ -34,7 +35,7 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "node-pre-gyp": "^0.6.32"
+        "node-pre-gyp": "^0.10.3"
     },
     "devDependencies": {
         "chai": "^4.1.2",
@@ -44,14 +45,10 @@
     },
     "gypfile": true,
     "binary": {
-        "module_name": "native_rt",
+        "module_name": "c_jose",
         "module_path": "./lib/binding/{configuration}/{platform}-{arch}/",
-        "remote_path": "./{module_name}/v{version}/{configuration}/",
-        "package_name": "{module_name}-v{version}-{platform}-{arch}.tar.gz",
-        "host": "https://nodeaddons.s3-us-west-2.amazonaws.com"
-    },
-    "scripts": {
-        "preinstall": "npm install node-pre-gyp",
-        "install": "node-pre-gyp install --fallback-to-build"
+        "remote_path": "./artifactory/generic-local/ca.delite.npm/binary/{platform}/{arch}/{configuration}/{module_name}/",
+        "package_name": "{module_name}-{version}.tgz",
+        "host": "https://public-access:eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJaTXA3Rmh1enJqcHBsWW9tNVZoU1NvbU05SDZUYUFQZzJBeTVwd3dqZjBvIn0.eyJzdWIiOiJqZnJ0QDAxY21wY3h4OGNjajVuMXloYXdoeXIwczY2XC91c2Vyc1wvcHVibGljLWFjY2VzcyIsInNjcCI6Im1lbWJlci1vZi1ncm91cHM6bnBtLXB1YmxpYyBhcGk6KiIsImF1ZCI6ImpmcnRAMDFjbXBjeHg4Y2NqNW4xeWhhd2h5cjBzNjYiLCJpc3MiOiJqZnJ0QDAxY21wY3h4OGNjajVuMXloYXdoeXIwczY2IiwiZXhwIjoxNTY1OTA1Mzc0LCJpYXQiOjE1MzQzNjkzNzQsImp0aSI6IjVhZDUyMTFiLWE1Y2QtNDFjZi1hYWVjLTI1MjAzYmZlNTE2NCJ9.BqFsCS2OjIwLm-ETsdgytIwXO3OFpdDfZhC_X-XOTyyNHZsUT0v0T04uxrbAte3iaN9AqKtgPtBG9QnmxKYScSQdztjSlimv0BPLcwaUAOvUp4UTNFhN-AIHwEyawn0-SwHeK974vP6bK5T4wrbdmHTE79clR7ALZ4JfEmQD_u1oIPN1qlKScJ_XC8ie3jQzdeKjZhyHisr3nTnkKICi-hqIYNK_iXO-X_Zb5c3zw0qdwB6qP7cGnwO8WsxKV9oXzqdDrtit084RGkVc6JfTnC764NedVHK-LYgSqsbPet4hMtl5ugJ1Mz7RSFM2bEZOuiv1FS0J0IkrG7gMRJ09Ww@bintray.delite.ca"
     }
 }
