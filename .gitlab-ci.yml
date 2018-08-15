@@ -4,6 +4,7 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
   NODE_MODULE_PATH: node_modules/.bin
   MOCHA_BIN: $NODE_MODULE_PATH/mocha
+  NODEGYP_BIN: $NODE_MODULE_PATH/node-gyp
   DOCKER_RUN: docker run --user root -t -e NODE_ENV=test -v $CI_PROJECT_DIR:/deploy $DEV_IMAGE
 
 stages:
@@ -18,5 +19,7 @@ test:
     - linux
   script:
     - NODE_ENV=test
+    - npm install node-gyp
+    - $NODEGYP_BIN build --debug
     - npm install
     - $MOCHA_BIN --timeout 100 "test/**/*.test.js"
