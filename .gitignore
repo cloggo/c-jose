@@ -3,8 +3,7 @@ build
 node_modules
 tmp
 /package-lock.json
-lib
 deps/jose/doc/**/*
 deps/jose/tests/**/*
-deps/jose/cmd/**/*
+lib/**
 jfrog
