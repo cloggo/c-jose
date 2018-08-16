@@ -10,7 +10,14 @@ variables:
 
 stages:
   - test
+  - build
   - upload
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+  - node_modules/
+  - build/stage/
 
 before_script:
   - NODE_ENV=test
@@ -27,9 +34,9 @@ test:
     - $NODEPREGYP_BIN build --debug
     - $MOCHA_BIN --timeout 100 "test/**/*.test.js"
 
-upload:
+build:
   image: registry.delite.ca/docker/base/node/10:c-jose
-  stage: upload
+  stage: build
   only:
     - master
   tags:
@@ -37,9 +44,13 @@ upload:
   script:
     - $NODEPREGYP_BIN rebuild
     - $NODEPREGYP_BIN package
-  artifacts:
-    paths:
-      - build/stage
-    expire_in: 1 day
 
+upload:
+  stage: upload
+  only:
+    - master
+  tags:
+    - linux
+  script:
+    - ./upload.sh gitlab-ci $JFROG_ARTIFACTORY_TOKEN
 
