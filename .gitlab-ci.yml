@@ -29,6 +29,7 @@ test:
   script:
     - NODE_ENV=test
     - npm install
+    - $NODEPREGYP_BIN configure
     - $NODEPREGYP_BIN build --debug
     - $MOCHA_BIN --timeout 100 "test/**/*.test.js"
 
@@ -40,7 +41,7 @@ build:
   tags:
     - linux
   script:
-    - $NODEPREGYP_BIN rebuild
+    - $NODEPREGYP_BIN build
     - $NODEPREGYP_BIN package
 
 upload:
