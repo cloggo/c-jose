@@ -50,5 +50,5 @@ upload:
   tags:
     - linux
   script:
-    - ./upload.sh gitlab-ci $JFROG_ARTIFACTORY_TOKEN
+    - ./upload.sh build cache gitlab-ci $JFROG_ARTIFACTORY_TOKEN
 
