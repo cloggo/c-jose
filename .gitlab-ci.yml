@@ -50,6 +50,6 @@ upload:
   tags:
     - linux
   script:
-    - find build/cache
-    - ./upload.sh build/cache gitlab-ci $JFROG_ARTIFACTORY_TOKEN
+    - find build/stage
+    - ./upload.sh build/stage gitlab-ci $JFROG_ARTIFACTORY_TOKEN
 
