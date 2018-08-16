@@ -35,8 +35,11 @@ upload:
   tags:
     - linux
   script:
-    - $NODEPREGYP_BIN build
+    - $NODEPREGYP_BIN rebuild
     - $NODEPREGYP_BIN package
-    - ./upload.sh gitlab-ci $JFROG_ARTIFACTORY_TOKEN
+  artififacts:
+    paths:
+      - build/stage
+    expire_in: 1 day
 
 
