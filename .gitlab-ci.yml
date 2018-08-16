@@ -37,7 +37,7 @@ upload:
   script:
     - $NODEPREGYP_BIN rebuild
     - $NODEPREGYP_BIN package
-  artififacts:
+  artifacts:
     paths:
       - build/stage
     expire_in: 1 day
