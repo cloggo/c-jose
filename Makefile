@@ -12,7 +12,7 @@ NODE_MODULE_PATH := node_modules/.bin
 MOCHA_BIN := $(NODE_MODULE_PATH)/mocha
 NODEMON_BIN := $(NODE_MODULE_PATH)/nodemon
 NODEGYP_BIN := $(NODE_MODULE_PATH)/node-gyp
-NODE_PRE_GYP_BIN := $(NODE_MODULE_PATH)/node-pre-gyp
+NODEPREGYP_BIN := $(NODE_MODULE_PATH)/node-pre-gyp
 
 WATCH_EXTS := js,json
 
@@ -24,18 +24,11 @@ pull:
 node_modules:
 	$(DOCKER_RUN) npm install
 
-tmp/config.done: binding.gyp deps/libjose.gyp node_modules
-	$(DOCKER_RUN) $(NODEGYP_BIN) configure -- --no-duplicate-basename-check
-	touch tmp/config.done
+debug: pull  node_modules
+	$(DOCKER_RUN) $(NODEPREGYP_BIN) build --debug
 
-debug: pull tmp/config.done
-	$(DOCKER_RUN) $(NODEGYP_BIN) build --debug
-
-build: pull tmp/config.done
-	$(DOCKER_RUN) $(NODEGYP_BIN) build
-
-install:
-	$(DOCKER_RUN) npm install
+build: pull node_modules
+	$(DOCKER_RUN) $(NODPREEGYP_BIN) build
 
 watch: pull
 	$(DOCKER_RUN) $(NODEMON_BIN) -e $(WATCH_EXTS) --watch app --watch test \
