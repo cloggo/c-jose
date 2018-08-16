@@ -41,6 +41,7 @@ build:
   tags:
     - linux
   script:
+    - $NODEPREGYP_BIN configure
     - $NODEPREGYP_BIN build
     - $NODEPREGYP_BIN package
 
