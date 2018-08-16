@@ -19,10 +19,6 @@ cache:
   - node_modules/
   - build/stage/
 
-before_script:
-  - NODE_ENV=test
-  - npm install
-
 test:
   image: registry.delite.ca/docker/base/node/10:c-jose
   stage: test
@@ -31,6 +27,8 @@ test:
   tags:
     - linux
   script:
+    - NODE_ENV=test
+    - npm install
     - $NODEPREGYP_BIN build --debug
     - $MOCHA_BIN --timeout 100 "test/**/*.test.js"
 
