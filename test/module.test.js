@@ -242,6 +242,6 @@ describe('JWK', function() {
         // jwk, JOSE.jose_json_encoding.JSON_SORT_KEYS | JOSE.jose_json_encoding.JSON_COMPACT));
     jwk = JOSE.jose_json_loads('{"alg": "ECMR"}');
     result = JOSE.jose_jwk_gen(jwk);
-    console.log(JOSE.jose_json_dumps(
-        jwk, JOSE.jose_json_encoding.JSON_SORT_KEYS | JOSE.jose_json_encoding.JSON_COMPACT));
+    // console.log(JOSE.jose_json_dumps(
+    //     jwk, JOSE.jose_json_encoding.JSON_SORT_KEYS | JOSE.jose_json_encoding.JSON_COMPACT));
 });
