@@ -48,16 +48,29 @@ NAPI_METHOD(c_jose_json_loads) {
 
 // json -> utf8 string
 NAPI_METHOD(c_jose_json_dumps) {
-  NAPI_METHOD_ARG(1);
+  napi_value argv[2];
+  size_t argc = 2;
+  napi_get_cb_info(env, info, &argc, argv, NULL, NULL);
+
+  if (argc < 1) {                                  \
+    napi_throw_error(env, "EINVAL", "Required at least one argument - JSON"); \
+    return NULL;                                          \
+  }
 
   napi_status status;
 
+  uint32_t flags = 0;
   void *c_json;
-  status = napi_get_value_external(env, argv[0], &c_json);
 
+  status = napi_get_value_external(env, argv[0], &c_json);
   assert(status == napi_ok);
 
-  char* char_json = json_dumps((json_t * )c_json, 0);
+  if (argc == 2) {
+    status = napi_get_value_uint32(env, argv[1], &flags);
+    assert(status == napi_ok);
+  }
+
+  char* char_json = json_dumps((json_t * )c_json, flags);
 
   napi_value result;
   napi_create_string_utf8(env, char_json, strlen(char_json), &result);
@@ -120,7 +133,7 @@ NAPI_METHOD(c_jose_json_foreach) {
 
 // helper macro
 #define create_uint32_value(name)               \
-  napi_value _##name;                             \
+  napi_value _##name;                           \
   napi_create_uint32(env, name, &_##name);
 
 
@@ -279,6 +292,7 @@ NAPI_METHOD(c_jose_json_value_get) {
   default:
     status = napi_get_undefined(env, &result);
     assert(status == napi_ok);
+    return result;
   }
 
   return result;
@@ -366,3 +380,141 @@ NAPI_METHOD(c_jose_json_object_update) {
 
   return result;
 }
+
+
+NAPI_METHOD(c_jose_json_object_set_new) {
+
+  NAPI_METHOD_ARG(3);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  JS_STRING_TO_C_CHAR(env, argv[1], key, status);
+
+  void *value;
+  status = napi_get_value_external(env, argv[2], &value);
+  assert(status == napi_ok);
+
+
+  int out = json_object_set_new((json_t *)json, key, (json_t *)value);
+
+  napi_value result;
+
+  status = napi_create_int32(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
+NAPI_METHOD(c_jose_json_construct) {
+  napi_value argv[2];
+  size_t argc = 2;
+  napi_get_cb_info(env, info, &argc, argv, NULL, NULL);
+
+  if (argc < 1) {                                  \
+    napi_throw_error(env, "EINVAL", "Required at least one argument - JSON type"); \
+    return NULL;                                          \
+  }
+
+  napi_status status;
+
+  uint32_t t = 0;
+  status = napi_get_value_uint32(env, argv[0], &t);
+  assert(status == napi_ok);
+  assert(t <= JSON_NULL);
+
+  json_t *json = NULL;
+
+  union {
+    char* s;
+    double r;
+    int64_t i;
+  } value;
+
+  napi_value result;
+
+  switch(t) {
+  case JSON_STRING:
+    assert(argc == 2);
+    size_t valueLength = 0;
+    status = napi_get_value_string_utf8(env, argv[1], NULL, 0, &valueLength); \
+    assert(status == napi_ok);
+    value.s = malloc(++valueLength);
+    status = napi_get_value_string_utf8(env, argv[1], value.s, valueLength, &valueLength); \
+    assert(status == napi_ok);
+    json = json_string(value.s);
+    free(value.s);
+    break;
+  case JSON_INTEGER:
+    assert(argc == 2);
+    status = napi_get_value_int64(env, argv[1], &value.i);
+    assert(status == napi_ok);
+    json = json_integer(value.i);
+    break;
+  case JSON_REAL:
+    assert(argc == 2);
+    status = napi_get_value_double(env, argv[1], &value.r);
+    assert(status == napi_ok);
+    json = json_real(value.r);
+    break;
+  case JSON_TRUE:
+    json = json_true();
+    break;
+  case JSON_FALSE:
+    json = json_false();
+    break;
+  case JSON_OBJECT:
+    json = json_object();
+    break;
+  case JSON_ARRAY:
+    json = json_array();
+    break;
+  default:
+    status = napi_get_undefined(env, &result);
+    assert(status == napi_ok);
+    return result;
+  }
+
+  status = napi_create_external(env, json, c_jose_json_decref, NULL, &result);
+
+  return result;
+}
+
+napi_value json_encoding_init(napi_env env) {
+  napi_value result;
+
+  napi_status status = napi_create_object(env, &result);
+  assert(status == napi_ok);
+
+  create_uint32_value(JSON_MAX_INDENT);
+  create_uint32_value(JSON_COMPACT);
+  create_uint32_value(JSON_ENSURE_ASCII);
+  create_uint32_value(JSON_SORT_KEYS);
+  create_uint32_value(JSON_PRESERVE_ORDER);
+  create_uint32_value(JSON_ENCODE_ANY);
+  create_uint32_value(JSON_ESCAPE_SLASH);
+  create_uint32_value(JSON_EMBED);
+
+  const napi_property_descriptor desc[] = {
+    DECLARE_NAPI_CONSTANT("JSON_MAX_INDENT", _JSON_MAX_INDENT),
+    DECLARE_NAPI_CONSTANT("JSON_COMPACT",_JSON_COMPACT),
+    DECLARE_NAPI_CONSTANT("JSON_ENSURE_ASCII",_JSON_ENSURE_ASCII),
+    DECLARE_NAPI_CONSTANT("JSON_SORT_KEYS",_JSON_SORT_KEYS),
+    DECLARE_NAPI_CONSTANT("JSON_PRESERVE_ORDER",_JSON_PRESERVE_ORDER),
+    DECLARE_NAPI_CONSTANT("JSON_ENCODE_ANY",_JSON_ENCODE_ANY),
+    DECLARE_NAPI_CONSTANT("JSON_ESCAPE_SLASH",_JSON_ESCAPE_SLASH),
+    DECLARE_NAPI_CONSTANT("JSON_EMBED",_JSON_EMBED),
+  };
+
+  size_t n_desc = sizeof(desc) / sizeof(napi_property_descriptor);
+
+  status = napi_define_properties(env, result, n_desc, desc);
+  assert(status == napi_ok);
+
+  return result;
+}
+

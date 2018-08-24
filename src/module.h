@@ -58,6 +58,7 @@ NAPI_METHOD(c_jose_b64_dec_buf);
 // =====
 // JSON
 napi_value json_type_init(napi_env env);
+napi_value json_encoding_init(napi_env env);
 void c_jose_json_decref(napi_env env, void* finalize_data, void* finalize_hint);
 void c_jose_io_decref(napi_env env, void* finalize_data, void* finalize_hint);
 
@@ -71,6 +72,8 @@ NAPI_METHOD(c_jose_json_value_get);
 NAPI_METHOD(c_jose_json_number_value);
 NAPI_METHOD(c_jose_json_is_number);
 NAPI_METHOD(c_jose_json_object_update);
+NAPI_METHOD(c_jose_json_object_set_new);
+NAPI_METHOD(c_jose_json_construct);
 
 
 // =====

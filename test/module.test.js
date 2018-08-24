@@ -9,12 +9,21 @@ let path = require('path');
 let JOSE = require('..');
 let chai = require('chai');
 
-// const kid = "6nLskcj2dYVXd7JUjFouB3Ne7So";
-const _fp = path.join(__dirname, './vector/test.luks.b64');
+const kid = "6nLskcj2dYVXd7JUjFouB3Ne7So";
+let _fp = path.join(__dirname, './vector/test.luks.b64');
 let tv = fs.readFileSync(_fp);
 tv = tv.toString();
 let hdr_b64 = tv.match(/^(.*?)\./);
 hdr_b64 = hdr_b64[1];
+
+_fp = path.join(__dirname, './vector/test.kid.6nLskcj2dYVXd7JUjFouB3Ne7So.json');
+tv = fs.readFileSync(_fp);
+let tang_jwk = tv.toString();
+
+function jose_json_get(json, key) {
+    return JOSE.jose_json_value_get(JOSE.jose_json_get(tang_jwk, key));
+}
+
 
 describe('JWK', function() {
     chai.should();
@@ -88,21 +97,21 @@ describe('JWK', function() {
     let srv;
 
     describe('calculate thumbprint', function() {
+        let buf = Buffer.allocUnsafe(dlen);
+        let arr = [];
+
+        JOSE.jose_json_foreach(decodedKeys, function(index, value) {
+            JOSE.jose_jwk_thp_buf(value, "S1", buf);
+            let tmp = JOSE.jose_b64_enc_bbuf(buf);
+
+            if(tmp === kid) {
+                srv = value;
+            }
+
+            arr.push(tmp);
+        });
+
         it('foreach element calculate thumbprint', function() {
-            let buf = Buffer.allocUnsafe(dlen);
-            let arr = [];
-
-            JOSE.jose_json_foreach(decodedKeys, function(index, value) {
-                JOSE.jose_jwk_thp_buf(value, "S1", buf);
-                let tmp = JOSE.jose_b64_enc_bbuf(buf);
-
-                if(tmp === kid) {
-                    srv = value;
-                }
-
-                arr.push(tmp);
-            });
-
             // console.log("value:", JOSE.jose_json_dumps(srv));
             arr.indexOf(kid).should.not.equal(-1);
         });
@@ -167,6 +176,72 @@ describe('JWK', function() {
 
     });
 
-    console.log(kid);
-    console.log(JOSE.jose_json_dumps(xfr));
+    // console.log(kid);
+    // console.log(JOSE.jose_json_dumps(xfr));
+    tang_jwk = JOSE.jose_json_loads(tang_jwk);
+    // console.log(JOSE.jose_json_dumps(tang_jwk));
+    const tang_d = jose_json_get(tang_jwk, "d");
+    const tang_alg = jose_json_get(tang_jwk, "alg");
+
+    describe('test: jose_jwk_prm', function() {
+        it('should not return undefined', function() {
+            // Anything code inside it will not modify outside variables
+            let result = JOSE.jose_jwk_prm(tang_jwk, true, "deriveKey");
+            expect(result).not.equal(undefined);
+            tang_alg.should.equal("ECMR");
+        });
+
+    });
+
+    let rep = JOSE.jose_jwk_exc(tang_jwk, xfr);
+
+    // JOSE.jose_json_object_set_new(
+    //     rep, "alg", JOSE.jose_json_construct(JOSE.jose_json_type.JSON_STRING,"ECMR"));
+    // JOSE.jose_json_object_set_new(
+    //     rep, "key_ops", JOSE.jose_json_loads(JSON.stringify(['driveKey'])));
+    JOSE.jose_json_object_update(rep, JOSE.jose_json_loads('{"alg": "ECMR"}'));
+    JOSE.jose_json_object_update(rep, JOSE.jose_json_loads('{"key_ops": ["deriveKey"]}'));
+
+    describe('test: jose_jwk_exc', function() {
+        it('should not return undefined', function() {
+            // Anything code inside it will not modify outside variables
+            expect(rep).not.equal(undefined);
+        });
+
+    });
+
+    rep = JOSE.jose_json_loads(JOSE.jose_json_dumps(
+        rep, JOSE.jose_json_encoding.JSON_SORT_KEYS | JOSE.jose_json_encoding.JSON_COMPACT));
+
+    // console.log(JOSE.jose_json_dumps(rep));
+    // console.log(JOSE.jose_json_dumps(eph));
+    // console.log(JOSE.jose_json_dumps(srv));
+    let tmp = JOSE.jose_jwk_exc(eph, srv);
+    let r_status_2 = JOSE.jose_json_object_update(tmp, alg);
+    // console.log(JOSE.jose_json_dumps(tmp));
+    r_status_2 = JOSE.jose_jwk_pub(rep);
+    // console.log(JOSE.jose_json_dumps(rep));
+    describe('test: jose_jwk_pub', function() {
+        it('should return true for success', function() {
+            // Anything code inside it will not modify outside variables
+            expect(r_status_2).not.equal(false);
+        });
+    });
+
+    let jwk = JOSE.jose_jwk_exc(rep, tmp);
+    // console.log(JOSE.jose_json_dumps(jwk));
+    // console.log(JOSE.jose_json_dumps(chdr));
+    let cek = JOSE.jose_jwe_dec_jwk(jwk, undefined, chdr);
+    const decrypted = "RimINj4G8YR7orofOsekZeGG4KsIBJyrbenHAS2aM]omaPOsXyvDe";
+    // console.log(cek);
+    // console.log(JOSE.jose_json_dumps(result));
+
+    jwk = JOSE.jose_json_loads('{"alg": "ES512"}');
+    let result = JOSE.jose_jwk_gen(jwk);
+    // console.log(JOSE.jose_json_dumps(
+        // jwk, JOSE.jose_json_encoding.JSON_SORT_KEYS | JOSE.jose_json_encoding.JSON_COMPACT));
+    jwk = JOSE.jose_json_loads('{"alg": "ECMR"}');
+    result = JOSE.jose_jwk_gen(jwk);
+    console.log(JOSE.jose_json_dumps(
+        jwk, JOSE.jose_json_encoding.JSON_SORT_KEYS | JOSE.jose_json_encoding.JSON_COMPACT));
 });

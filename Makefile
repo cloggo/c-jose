@@ -23,6 +23,7 @@ pull:
 
 node_modules:
 	$(DOCKER_RUN) npm install
+	$(DOCKER_RUN) $(NODEPREGYP_BIN) configure
 
 debug: pull  node_modules
 	$(DOCKER_RUN) $(NODEPREGYP_BIN) build --debug

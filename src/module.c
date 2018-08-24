@@ -65,6 +65,7 @@ napi_value Init(napi_env env, napi_value exports) {
 
   napi_property_descriptor descArray[] = {
     DECLARE_NAPI_CONSTANT("jose_json_type", json_type_init(env)),
+    DECLARE_NAPI_CONSTANT("jose_json_encoding", json_encoding_init(env)),
     DECLARE_NAPI_METHOD("jose_json_loads", c_jose_json_loads),
     DECLARE_NAPI_METHOD("jose_json_dumps", c_jose_json_dumps),
     DECLARE_NAPI_METHOD("jose_json_foreach", c_jose_json_foreach),
@@ -75,6 +76,8 @@ napi_value Init(napi_env env, napi_value exports) {
     DECLARE_NAPI_METHOD("jose_json_is_number", c_jose_json_is_number),
     DECLARE_NAPI_METHOD("jose_json_number_value", c_jose_json_number_value),
     DECLARE_NAPI_METHOD("jose_json_object_update", c_jose_json_object_update),
+    DECLARE_NAPI_METHOD("jose_json_object_set_new", c_jose_json_object_set_new),
+    DECLARE_NAPI_METHOD("jose_json_construct", c_jose_json_construct),
     DECLARE_NAPI_METHOD("jose_b64_dec_buf", c_jose_b64_dec_buf),
     DECLARE_NAPI_METHOD("jose_b64_enc_sbuf", c_jose_b64_enc_sbuf),
     DECLARE_NAPI_METHOD("jose_b64_enc_bbuf", c_jose_b64_enc_bbuf),
