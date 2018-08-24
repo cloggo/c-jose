@@ -164,7 +164,7 @@ describe('JWK', function() {
     let xfr = JOSE.jose_jwk_exc(clt, eph);
     let r_status = JOSE.jose_json_object_update(xfr, alg);
 
-    describe('multiply elliptic curve', function() {
+    describe('multiplication', function() {
         it('should successfully generate jwk', function() {
             // Anything code inside it will not modify outside variables
             expect(r_status).above(-1);
@@ -239,7 +239,7 @@ describe('JWK', function() {
     jwk = JOSE.jose_json_loads('{"alg": "ES512"}');
     let result = JOSE.jose_jwk_gen(jwk);
     // console.log(JOSE.jose_json_dumps(
-        // jwk, JOSE.jose_json_encoding.JSON_SORT_KEYS | JOSE.jose_json_encoding.JSON_COMPACT));
+    // jwk, JOSE.jose_json_encoding.JSON_SORT_KEYS | JOSE.jose_json_encoding.JSON_COMPACT));
     jwk = JOSE.jose_json_loads('{"alg": "ECMR"}');
     result = JOSE.jose_jwk_gen(jwk);
     // console.log(JOSE.jose_json_dumps(
