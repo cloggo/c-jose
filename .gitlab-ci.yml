@@ -26,6 +26,8 @@ before_script:
   - npm install --registry https://npm.delite.ca
   - git config --global user.email "gitlab-ci@delite.ca"
   - git config --global user.name "gitlab-ci"
+  - git fetch --all --tags --prune
+  - TAG=$(git describe --abbrev=0 --tags)
 
 
 test:
@@ -48,7 +50,8 @@ build:
   tags:
     - linux
   script:
-    - npm version $(git describe --abbrev=0 --tags) --no-git-tag-version
+    - git checkout tags/$TAG -b build
+    - npm version $TAG --no-git-tag-version
     - $NODEPREGYP_BIN configure
     - $NODEPREGYP_BIN build
     - $NODEPREGYP_BIN package
@@ -61,6 +64,7 @@ upload:
   tags:
     - linux
   script:
+    - git checkout tags/$TAG -b build
     - npm publish --registry https://npm.delite.ca
     - ./upload.sh build/stage gitlab-ci $JFROG_ARTIFACTORY_TOKEN
 
@@ -71,5 +75,6 @@ publish:
   tags:
     - linux
   script:
+    - git checkout tags/$TAG -b build
     - echo "//registry.npmjs.org/:_authToken=\"${NPMJS_TOKEN}\"" > ~/.npmrc
     - npm publish --registry https://registry.npmjs.org
