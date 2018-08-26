@@ -49,7 +49,7 @@ build:
   tags:
     - linux
   script:
-    - git checkout tags/$TAG -b build
+    - git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"
     - npm version $TAG --no-git-tag-version
     - $NODEPREGYP_BIN configure
     - $NODEPREGYP_BIN build
@@ -63,8 +63,8 @@ upload:
   tags:
     - linux
   script:
+    - git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"
     - echo "//npm.delite.ca/:_authToken=\"${VERDACCIO_NPM_TOKEN}\"" > ~/.npmrc
-    - git checkout tags/$TAG -b build
     - npm publish --registry https://npm.delite.ca
     - ./upload.sh build/stage gitlab-ci $JFROG_ARTIFACTORY_TOKEN
 
@@ -75,6 +75,6 @@ publish:
   tags:
     - linux
   script:
+    - git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"
     - echo "//registry.npmjs.org/:_authToken=\"${NPMJS_TOKEN}\"" > ~/.npmrc
-    - git checkout tags/$TAG -b build
     - npm publish --registry https://registry.npmjs.org
