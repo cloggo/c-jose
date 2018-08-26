@@ -13,6 +13,10 @@ stages:
   - build
   - upload
 
+before_script:
+  - echo "//npm.delite.ca/:_authToken="${NPM_TOKEN}" > ~/.npmrc
+
+
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
@@ -52,5 +56,7 @@ upload:
   tags:
     - linux
   script:
+    - npm --version
+    - npm publish --registry https://npm.delite.ca
     - ./upload.sh build/stage gitlab-ci $JFROG_ARTIFACTORY_TOKEN
 
