@@ -43,7 +43,7 @@ build:
   image: registry.delite.ca/docker/base/node/10:c-jose
   stage: build
   only:
-    - master
+    - deploy
   tags:
     - linux
   script:
@@ -54,8 +54,7 @@ build:
 upload:
   stage: upload
   only:
-    - master
-    - tags
+    - deploy
   tags:
     - linux
   script:
