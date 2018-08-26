@@ -29,7 +29,13 @@ debug: pull  node_modules
 	$(DOCKER_RUN) $(NODEPREGYP_BIN) build --debug
 
 build: pull node_modules
-	$(DOCKER_RUN) $(NODPREEGYP_BIN) build
+	$(DOCKER_RUN) $(NODEPREGYP_BIN) build
+
+local-build:
+	npm install
+	$(NODEPREGYP_BIN) configure
+	$(NODEPREGYP_BIN) build
+	$(NODEPREGYP_BIN) package
 
 watch: pull
 	$(DOCKER_RUN) $(NODEMON_BIN) -e $(WATCH_EXTS) --watch app --watch test \
