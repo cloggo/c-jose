@@ -14,6 +14,8 @@ stages:
   - upload
 
 before_script:
+  - git config --global user.email "gitlab-ci@delite.ca"
+  - git config --global user.name "gitlab-ci"
   - echo "//npm.delite.ca/:_authToken=\"${NPM_TOKEN}\"" > ~/.npmrc
 
 
