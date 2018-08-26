@@ -22,7 +22,7 @@ cache:
   - package.json
 
 before_script:
-  - echo "//npm.delite.ca/:_authToken=\"${VERDACCIO_NPM_TOKEN}\"" > ~/.npmrc
+  - echo "//npm.delite.ca/:_authToken=\"${VERDACCIO_NPM_TOKEN_READONLY}\"" > ~/.npmrc
   - npm install --registry https://npm.delite.ca
   - git config --global user.email "gitlab-ci@delite.ca"
   - git config --global user.name "gitlab-ci"
@@ -64,6 +64,7 @@ upload:
   tags:
     - linux
   script:
+    - echo "//npm.delite.ca/:_authToken=\"${VERDACCIO_NPM_TOKEN}\"" > ~/.npmrc
     - git checkout tags/$TAG -b build
     - npm publish --registry https://npm.delite.ca
     - ./upload.sh build/stage gitlab-ci $JFROG_ARTIFACTORY_TOKEN
@@ -75,6 +76,6 @@ publish:
   tags:
     - linux
   script:
-    - git checkout tags/$TAG -b build
     - echo "//registry.npmjs.org/:_authToken=\"${NPMJS_TOKEN}\"" > ~/.npmrc
+    - git checkout tags/$TAG -b build
     - npm publish --registry https://registry.npmjs.org
