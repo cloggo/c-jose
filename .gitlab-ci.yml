@@ -13,23 +13,21 @@ stages:
   - build
   - upload
 
-before_script:
-  - git config --global user.email "gitlab-ci@delite.ca"
-  - git config --global user.name "gitlab-ci"
-  - echo "//npm.delite.ca/:_authToken=\"${NPM_TOKEN}\"" > ~/.npmrc
-
-
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
   - node_modules/
   - build/stage/
 
+before_script:
+  - git config --global user.email "gitlab-ci@delite.ca"
+  - git config --global user.name "gitlab-ci"
+  - echo "//npm.delite.ca/:_authToken=\"${NPM_TOKEN}\"" > ~/.npmrc
+
+
 test:
   image: registry.delite.ca/docker/base/node/10:c-jose
   stage: test
-  only:
-    - master
   tags:
     - linux
   script:
