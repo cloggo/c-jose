@@ -49,8 +49,7 @@ build:
     - linux
   script:
     - if ! git rev-parse --verify "$CI_COMMIT_REF_SLUG"; then git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"; fi
-    - echo $TAG
-    - npm version $TAG --no-git-tag-version
+    - npm version $TAG --no-git-tag-version --allow-same-version
     - $NODEPREGYP_BIN configure
     - $NODEPREGYP_BIN build
     - $NODEPREGYP_BIN package
