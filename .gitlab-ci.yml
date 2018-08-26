@@ -12,6 +12,7 @@ stages:
   - test
   - build
   - upload
+  - publish
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -64,7 +65,7 @@ upload:
     - ./upload.sh build/stage gitlab-ci $JFROG_ARTIFACTORY_TOKEN
 
 publish:
-  stage: upload
+  stage: publish
   only:
     - publish
   tags:
