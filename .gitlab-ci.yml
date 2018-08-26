@@ -14,7 +14,7 @@ stages:
   - upload
 
 before_script:
-  - echo "//npm.delite.ca/:_authToken="${NPM_TOKEN}" > ~/.npmrc
+  - echo "//npm.delite.ca/:_authToken=\"${NPM_TOKEN}\"" > ~/.npmrc
 
 
 cache:
