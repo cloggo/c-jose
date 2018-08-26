@@ -131,11 +131,6 @@ NAPI_METHOD(c_jose_json_foreach) {
   return result;
 }
 
-// helper macro
-#define create_uint32_value(name)               \
-  napi_value _##name;                           \
-  napi_create_uint32(env, name, &_##name);
-
 
 // create json type enumeration: json_type.JSON_ARRAY, json_type.JSON_STRING, ...
 napi_value json_type_init(napi_env env) {

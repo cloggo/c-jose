@@ -237,11 +237,17 @@ describe('JWK', function() {
     // console.log(JOSE.jose_json_dumps(result));
 
     jwk = JOSE.jose_json_loads('{"alg": "ES512"}');
-    let result = JOSE.jose_jwk_gen(jwk);
+    let jwk_es512 = JOSE.jose_jwk_gen(jwk);
     // console.log(JOSE.jose_json_dumps(
     // jwk, JOSE.jose_json_encoding.JSON_SORT_KEYS | JOSE.jose_json_encoding.JSON_COMPACT));
     jwk = JOSE.jose_json_loads('{"alg": "ECMR"}');
-    result = JOSE.jose_jwk_gen(jwk);
+    let jwk_ecmr = JOSE.jose_jwk_gen(jwk);
     // console.log(JOSE.jose_json_dumps(
     //     jwk, JOSE.jose_json_encoding.JSON_SORT_KEYS | JOSE.jose_json_encoding.JSON_COMPACT));
+
+    // JOSE.jose_alg_foreach(function(kind, name) {
+    //     if (kind === JOSE.jose_alg_kind.JOSE_HOOK_ALG_KIND_HASH) {
+    //         console.log(kind, name);
+    //     }
+    // });
 });

@@ -48,6 +48,17 @@
 bool free_char(char **p);
 bool free_json(json_t **p);
 
+// helper macro
+#define create_uint32_value(name)               \
+  napi_value _##name;                           \
+  napi_create_uint32(env, name, &_##name);
+
+
+// ===
+// ALG
+
+napi_value alg_kind_init(napi_env env);
+NAPI_METHOD(c_jose_alg_foreach);
 
 // =====
 // BASE64

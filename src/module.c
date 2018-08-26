@@ -66,6 +66,8 @@ napi_value Init(napi_env env, napi_value exports) {
   napi_property_descriptor descArray[] = {
     DECLARE_NAPI_CONSTANT("jose_json_type", json_type_init(env)),
     DECLARE_NAPI_CONSTANT("jose_json_encoding", json_encoding_init(env)),
+    DECLARE_NAPI_CONSTANT("jose_alg_kind", alg_kind_init(env)),
+    DECLARE_NAPI_METHOD("jose_alg_foreach", c_jose_alg_foreach),
     DECLARE_NAPI_METHOD("jose_json_loads", c_jose_json_loads),
     DECLARE_NAPI_METHOD("jose_json_dumps", c_jose_json_dumps),
     DECLARE_NAPI_METHOD("jose_json_foreach", c_jose_json_foreach),

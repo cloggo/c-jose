@@ -8,6 +8,7 @@
             ],
             "sources": [
                 "./src/module.c",
+                "./src/alg.c",
                 "./src/json.c",
                 "./src/b64.c",
                 "./src/jwe.c",
