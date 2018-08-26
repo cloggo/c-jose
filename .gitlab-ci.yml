@@ -7,6 +7,7 @@ variables:
   NODEGYP_BIN: $NODE_MODULE_PATH/node-gyp
   NODEPREGYP_BIN: $NODE_MODULE_PATH/node-pre-gyp
   DOCKER_RUN: docker run --user root -t -e NODE_ENV=test -v $CI_PROJECT_DIR:/deploy $DEV_IMAGE
+  GIT_CO_TAG: 
 
 stages:
   - test
@@ -49,7 +50,7 @@ build:
   tags:
     - linux
   script:
-    - git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"
+    - if ! git rev-parse --verify "$CI_COMMIT_REF_SLUG"; then git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"; fi
     - npm version $TAG --no-git-tag-version
     - $NODEPREGYP_BIN configure
     - $NODEPREGYP_BIN build
@@ -63,7 +64,7 @@ upload:
   tags:
     - linux
   script:
-    - git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"
+    - if ! git rev-parse --verify "$CI_COMMIT_REF_SLUG"; then git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"; fi
     - echo "//npm.delite.ca/:_authToken=\"${VERDACCIO_NPM_TOKEN}\"" > ~/.npmrc
     - npm publish --registry https://npm.delite.ca
     - ./upload.sh build/stage gitlab-ci $JFROG_ARTIFACTORY_TOKEN
@@ -75,6 +76,6 @@ publish:
   tags:
     - linux
   script:
-    - git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"
+    - if ! git rev-parse --verify "$CI_COMMIT_REF_SLUG"; then git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"; fi
     - echo "//registry.npmjs.org/:_authToken=\"${NPMJS_TOKEN}\"" > ~/.npmrc
     - npm publish --registry https://registry.npmjs.org
