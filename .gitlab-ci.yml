@@ -7,7 +7,6 @@ variables:
   NODEGYP_BIN: $NODE_MODULE_PATH/node-gyp
   NODEPREGYP_BIN: $NODE_MODULE_PATH/node-pre-gyp
   DOCKER_RUN: docker run --user root -t -e NODE_ENV=test -v $CI_PROJECT_DIR:/deploy $DEV_IMAGE
-  GIT_CO_TAG: 
 
 stages:
   - test
