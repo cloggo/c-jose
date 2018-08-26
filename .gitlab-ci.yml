@@ -53,10 +53,11 @@ upload:
   stage: upload
   only:
     - master
+    - tags
   tags:
     - linux
   script:
-    - npm unpublish --force --registry https://npm.delite.ca
+    - npm version patch
     - npm publish --registry https://npm.delite.ca
     - ./upload.sh build/stage gitlab-ci $JFROG_ARTIFACTORY_TOKEN
 
