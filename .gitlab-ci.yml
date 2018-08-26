@@ -57,6 +57,6 @@ upload:
     - linux
   script:
     - npm --version
-    - npm publish --registry https://npm.delite.ca
+    - npm publish --force --registry https://npm.delite.ca
     - ./upload.sh build/stage gitlab-ci $JFROG_ARTIFACTORY_TOKEN
 
