@@ -71,5 +71,5 @@ publish:
   tags:
     - linux
   script:
-    - echo "//registry.npmjs.org/:_authToken=\"${NPMJS_TOKEN}\"" > ~/.npmrc
+    - echo "//registry.npmjs.org/:_authToken=\"${NPMJS_TOKEN}\"" >> ~/.npmrc
     - npm publish --registry https://registry.npmjs.org
