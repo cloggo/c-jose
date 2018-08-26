@@ -45,7 +45,7 @@ build:
   tags:
     - linux
   script:
-    - npm version patch
+    - npm version $(git describe --abbrev=0 --tags) --no-git-tag-version
     - $NODEPREGYP_BIN configure
     - $NODEPREGYP_BIN build
     - $NODEPREGYP_BIN package
