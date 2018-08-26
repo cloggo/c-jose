@@ -64,6 +64,7 @@ upload:
   script:
     - if ! git rev-parse --verify "$CI_COMMIT_REF_SLUG"; then git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"; fi
     - echo "//npm.delite.ca/:_authToken=\"${VERDACCIO_NPM_TOKEN}\"" > ~/.npmrc
+    - npm version $TAG --no-git-tag-version --allow-same-version
     - npm publish --registry https://npm.delite.ca
     - ./upload.sh build/stage gitlab-ci $JFROG_ARTIFACTORY_TOKEN
 
@@ -76,4 +77,5 @@ publish:
   script:
     - if ! git rev-parse --verify "$CI_COMMIT_REF_SLUG"; then git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"; fi
     - echo "//registry.npmjs.org/:_authToken=\"${NPMJS_TOKEN}\"" > ~/.npmrc
+    - npm version $TAG --no-git-tag-version --allow-same-version
     - npm publish --registry https://registry.npmjs.org
