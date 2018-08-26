@@ -43,6 +43,7 @@ build:
   stage: build
   only:
     - deploy
+    - publish
   tags:
     - linux
   script:
@@ -55,6 +56,7 @@ upload:
   stage: upload
   only:
     - deploy
+    - publish
   tags:
     - linux
   script:
@@ -68,4 +70,5 @@ publish:
   tags:
     - linux
   script:
-    - npm publish --registry npm publish --registry https://registry.npmjs.org
+    - echo "//registry.npmjs.org/:_authToken=\"${NPMJS_TOKEN}\"" > ~/.npmrc
+    - npm publish --registry https://registry.npmjs.org
