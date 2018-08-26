@@ -58,6 +58,7 @@ build:
 upload:
   stage: publish
   only:
+    - deploy
     - publish
   tags:
     - linux
