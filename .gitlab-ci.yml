@@ -28,7 +28,6 @@ before_script:
   - git fetch --all --tags --prune
   - TAG=$(git describe --abbrev=0 --tags)
 
-
 test:
   image: registry.delite.ca/docker/base/node/10:c-jose
   stage: test
@@ -50,6 +49,7 @@ build:
     - linux
   script:
     - if ! git rev-parse --verify "$CI_COMMIT_REF_SLUG"; then git checkout tags/$TAG -b "$CI_COMMIT_REF_SLUG"; fi
+    - echo $TAG
     - npm version $TAG --no-git-tag-version
     - $NODEPREGYP_BIN configure
     - $NODEPREGYP_BIN build

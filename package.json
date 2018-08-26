@@ -1,7 +1,7 @@
 {
     "name": "c-jose",
     "description": "jose - node c binding",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "main": "index.js",
     "scripts": {
         "preinstall": "npm install node-pre-gyp",
