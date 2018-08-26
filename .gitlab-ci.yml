@@ -20,6 +20,7 @@ cache:
   - build/stage/
 
 before_script:
+  - npm install
   - git config --global user.email "gitlab-ci@delite.ca"
   - git config --global user.name "gitlab-ci"
   - echo "//npm.delite.ca/:_authToken=\"${NPM_TOKEN}\"" > ~/.npmrc
@@ -32,7 +33,6 @@ test:
     - linux
   script:
     - NODE_ENV=test
-    - npm install
     - $NODEPREGYP_BIN configure
     - $NODEPREGYP_BIN build --debug
     - $MOCHA_BIN --timeout 100 "test/**/*.test.js"
@@ -45,6 +45,7 @@ build:
   tags:
     - linux
   script:
+    - npm version patch
     - $NODEPREGYP_BIN configure
     - $NODEPREGYP_BIN build
     - $NODEPREGYP_BIN package
@@ -56,7 +57,6 @@ upload:
   tags:
     - linux
   script:
-    - npm version patch
     - npm publish --registry https://npm.delite.ca
     - ./upload.sh build/stage gitlab-ci $JFROG_ARTIFACTORY_TOKEN
 
