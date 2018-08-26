@@ -20,6 +20,7 @@ cache:
   - node_modules/
   - build/stage/
   - package.json
+  - /root/.npmrc
 
 before_script:
   - echo "//npm.delite.ca/:_authToken=\"${VERDACCIO_NPM_TOKEN}\"" > ~/.npmrc
