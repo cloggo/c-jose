@@ -183,6 +183,31 @@ NAPI_METHOD(c_jose_json_typeof) {
   return result;
 }
 
+// typeof(json) -> json type
+NAPI_METHOD(c_jose_json_deep_copy) {
+  NAPI_METHOD_ARG(1);
+
+  napi_status status;
+
+  void *json_in;
+  status = napi_get_value_external(env, argv[0], &json_in);
+  assert(status == napi_ok);
+
+  json_t * json_out = json_deep_copy(json_in);
+
+  napi_value result;
+
+  if(!json_out) {
+    napi_get_undefined(env, &result);
+    return result;
+  }
+
+  status = napi_create_external(env, json_out, c_jose_json_decref, NULL, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
 
 // array_get(json_array, index) -> return json at index
 NAPI_METHOD(c_jose_json_array_get) {
