@@ -73,6 +73,7 @@ napi_value json_encoding_init(napi_env env);
 void c_jose_json_decref(napi_env env, void* finalize_data, void* finalize_hint);
 void c_jose_io_decref(napi_env env, void* finalize_data, void* finalize_hint);
 
+NAPI_METHOD(c_jose_json_deep_copy);
 NAPI_METHOD(c_jose_json_loads);
 NAPI_METHOD(c_jose_json_dumps);
 NAPI_METHOD(c_jose_json_foreach);
