@@ -13,6 +13,7 @@
                 "./src/b64.c",
                 "./src/jwe.c",
                 "./src/jws.c",
+                "./src/io.c",
                 "./src/jwk.c"
             ],
             'dependencies': [

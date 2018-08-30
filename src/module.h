@@ -67,6 +67,11 @@ NAPI_METHOD(c_jose_b64_enc_bbuf);
 NAPI_METHOD(c_jose_b64_dec_buf);
 
 // =====
+// IO
+NAPI_METHOD(c_jose_io_buffer);
+NAPI_METHOD(c_jose_io_malloc);
+
+// =====
 // JSON
 napi_value json_type_init(napi_env env);
 napi_value json_encoding_init(napi_env env);
@@ -79,13 +84,25 @@ NAPI_METHOD(c_jose_json_dumps);
 NAPI_METHOD(c_jose_json_foreach);
 NAPI_METHOD(c_jose_json_typeof);
 NAPI_METHOD(c_jose_json_get);
-NAPI_METHOD(c_jose_json_array_get);
 NAPI_METHOD(c_jose_json_value_get);
+NAPI_METHOD(c_jose_json_array);
+NAPI_METHOD(c_jose_json_array_get);
+NAPI_METHOD(c_jose_json_array_append_new);
+NAPI_METHOD(c_jose_json_array_append);
+NAPI_METHOD(c_jose_json_array_insert);
+NAPI_METHOD(c_jose_json_array_insert_new);
+NAPI_METHOD(c_jose_json_array_extend);
+NAPI_METHOD(c_jose_json_array_remove);
+NAPI_METHOD(c_jose_json_array_clear);
 NAPI_METHOD(c_jose_json_number_value);
 NAPI_METHOD(c_jose_json_is_number);
+NAPI_METHOD(c_jose_json_object);
 NAPI_METHOD(c_jose_json_object_update);
+NAPI_METHOD(c_jose_json_object_set);
 NAPI_METHOD(c_jose_json_object_set_new);
-NAPI_METHOD(c_jose_json_construct);
+NAPI_METHOD(c_jose_json_object_del);
+NAPI_METHOD(c_jose_json_object_clear);
+NAPI_METHOD(c_jose_json_create);
 
 
 // =====
