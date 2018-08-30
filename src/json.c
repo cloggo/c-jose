@@ -208,6 +208,44 @@ NAPI_METHOD(c_jose_json_deep_copy) {
   return result;
 }
 
+NAPI_METHOD(c_jose_json_object) {
+  /* NAPI_METHOD_ARG(0); */
+  napi_status status;
+
+  json_t* json = json_object();
+
+  napi_value result;
+
+  if(!json) {
+    napi_get_undefined(env, &result);
+    return result;
+  }
+
+  status = napi_create_external(env, json, c_jose_json_decref, NULL, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
+NAPI_METHOD(c_jose_json_array) {
+  /* NAPI_METHOD_ARG(0); */
+  napi_status status;
+
+  json_t* json = json_array();
+
+  napi_value result;
+
+  if(!json) {
+    napi_get_undefined(env, &result);
+    return result;
+  }
+
+  status = napi_create_external(env, json, c_jose_json_decref, NULL, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
 
 // array_get(json_array, index) -> return json at index
 NAPI_METHOD(c_jose_json_array_get) {
@@ -401,6 +439,260 @@ NAPI_METHOD(c_jose_json_object_update) {
   return result;
 }
 
+NAPI_METHOD(c_jose_json_array_append_new) {
+
+  NAPI_METHOD_ARG(2);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  void *value;
+  status = napi_get_value_external(env, argv[1], &value);
+  assert(status == napi_ok);
+
+
+  int out = json_array_append_new((json_t *)json, (json_t *)value);
+
+  napi_value result;
+
+  status = napi_create_int32(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+NAPI_METHOD(c_jose_json_array_extend) {
+
+  NAPI_METHOD_ARG(2);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  void *value;
+  status = napi_get_value_external(env, argv[1], &value);
+  assert(status == napi_ok);
+
+
+  int out = json_array_extend((json_t *)json, (json_t *)value);
+
+  napi_value result;
+
+  status = napi_create_int32(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
+
+NAPI_METHOD(c_jose_json_array_append) {
+
+  NAPI_METHOD_ARG(2);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  void *value;
+  status = napi_get_value_external(env, argv[1], &value);
+  assert(status == napi_ok);
+
+
+  int out = json_array_append((json_t *)json, (json_t *)value);
+
+  napi_value result;
+
+  status = napi_create_int32(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
+NAPI_METHOD(c_jose_json_array_remove) {
+
+  NAPI_METHOD_ARG(2);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  uint32_t index;
+  status = napi_get_value_uint32(env, argv[1], &index);
+  assert(status == napi_ok);
+
+  int out = json_array_remove((json_t *)json, (size_t) index);
+
+  napi_value result;
+
+  status = napi_create_int32(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
+NAPI_METHOD(c_jose_json_object_del) {
+
+  NAPI_METHOD_ARG(2);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  JS_STRING_TO_C_CHAR(env, argv[1], key, status);
+
+  int out = json_object_del((json_t *)json, key);
+
+  napi_value result;
+
+  status = napi_create_int32(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
+NAPI_METHOD(c_jose_json_array_clear) {
+
+  NAPI_METHOD_ARG(1);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  int out = json_array_clear((json_t *)json);
+
+  napi_value result;
+
+  status = napi_create_int32(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
+NAPI_METHOD(c_jose_json_object_clear) {
+
+  NAPI_METHOD_ARG(1);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  int out = json_object_clear((json_t *)json);
+
+  napi_value result;
+
+  status = napi_create_int32(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
+NAPI_METHOD(c_jose_json_array_insert_new) {
+
+  NAPI_METHOD_ARG(3);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  uint32_t index = -1;
+  status = napi_get_value_uint32(env, argv[1], &index);
+  assert(status == napi_ok);
+
+  void *value;
+  status = napi_get_value_external(env, argv[2], &value);
+  assert(status == napi_ok);
+
+
+  int out = json_array_insert_new((json_t *)json, index, (json_t *)value);
+
+  napi_value result;
+
+  status = napi_create_int32(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
+NAPI_METHOD(c_jose_json_array_insert) {
+
+  NAPI_METHOD_ARG(3);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  uint32_t index = -1;
+  status = napi_get_value_uint32(env, argv[1], &index);
+  assert(status == napi_ok);
+
+  void *value;
+  status = napi_get_value_external(env, argv[2], &value);
+  assert(status == napi_ok);
+
+
+  int out = json_array_insert((json_t *)json, index, (json_t *)value);
+
+  napi_value result;
+
+  status = napi_create_int32(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
+
+
+NAPI_METHOD(c_jose_json_object_set) {
+
+  NAPI_METHOD_ARG(3);
+
+  napi_status status;
+
+  void *json;
+  status = napi_get_value_external(env, argv[0], &json);
+  assert(status == napi_ok);
+
+  JS_STRING_TO_C_CHAR(env, argv[1], key, status);
+
+  void *value;
+  status = napi_get_value_external(env, argv[2], &value);
+  assert(status == napi_ok);
+
+
+  int out = json_object_set((json_t *)json, key, (json_t *)value);
+
+  napi_value result;
+
+  status = napi_create_int32(env, out, &result);
+  assert(status == napi_ok);
+
+  return result;
+}
 
 NAPI_METHOD(c_jose_json_object_set_new) {
 
@@ -430,7 +722,7 @@ NAPI_METHOD(c_jose_json_object_set_new) {
 }
 
 
-NAPI_METHOD(c_jose_json_construct) {
+NAPI_METHOD(c_jose_json_create) {
   napi_value argv[2];
   size_t argc = 2;
   napi_get_cb_info(env, info, &argc, argv, NULL, NULL);
