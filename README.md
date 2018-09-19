@@ -1,4 +1,4 @@
-## About
+# c-jose
 
 [![npm](https://img.shields.io/npm/v/c-jose.svg)](https://www.npmjs.com/package/c-jose)
 
